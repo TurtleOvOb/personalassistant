@@ -1,0 +1,127 @@
+﻿/* --- 搜索输入框 --- */
+#input_Search {
+    /* 注意：Qt中rgba第四位通常建议用0-255，这里15代表非常浅的灰色 */
+    background-color: rgba(0, 0, 0, 15); 
+    border: 1px solid #D1D1D6;
+    border-radius: 4px;
+    color: #333333;
+    padding: 2px 5px;
+}
+
+#input_Search:hover {
+    background-color: rgba(0, 0, 0, 30);
+    border: 1px solid #C7C7CC;
+}
+
+/* --- 标题输入框 --- */
+#input_Title {
+    background-color: transparent;
+    border: none;
+    border-left: 3px solid #007AFF;
+    padding-left: 8px;
+    color: #1C1C1E;
+    font-weight: bold;
+}
+
+/* --- 描述输入框 --- */
+#input_Description {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #D1D1D6;
+    color: #333333;
+}
+
+/* --- 详情描述文本框 --- */
+#input_S_Description {
+    background-color: #F2F2F7;
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    color: #1C1C1E;
+}
+
+/* --- QComboBox (下拉框) --- */
+QComboBox {
+    background-color: #FFFFFF;
+    border: 1px solid #D1D1D6;
+    padding: 5px;
+    border-radius: 4px;
+    color: #333333;
+}
+
+QComboBox:hover {
+    background-color: #F9F9F9;
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 24px;
+    background-color: transparent;
+    border-left: 1px solid #E5E5EA;
+}
+
+QComboBox::down-arrow {
+    image: url(:/blackIcon/res/black/xiajiantou.png); 
+    width: 10px;
+    height: 10px;
+}
+
+QComboBox QAbstractItemView {
+    background-color: #FFFFFF;
+    border: 1px solid #D1D1D6;
+    selection-background-color: #007AFF;
+    selection-color: #FFFFFF;
+    outline: none;
+}
+
+/* --- QDateEdit (日期选择) --- */
+QDateEdit {
+    background-color: #FFFFFF;
+    border: 1px solid #D1D1D6;
+    padding: 5px;
+    border-radius: 4px;
+    color: #333333;
+}
+
+QDateEdit::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 24px;
+    background-color: transparent;
+    border-left: 1px solid #E5E5EA;
+}
+
+QDateEdit::down-arrow {
+   image: url(:/blackIcon/res/black/xiajiantou.png); 
+    width: 10px;
+    height: 10px;
+}
+
+/* --- QCalendarWidget (日历控件) --- */
+QCalendarWidget {
+    background: #FFFFFF;
+    border: 1px solid #D1D1D6;
+    border-radius: 8px;
+}
+
+QCalendarWidget QWidget#qt_calendar_navigationbar {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #E5E5EA;
+}
+
+QCalendarWidget QToolButton {
+    color: #1C1C1E;
+    background: transparent;
+    border: none;
+    margin: 4px;
+}
+
+QCalendarWidget QTableView {
+    alternate-background-color: #F9F9F9;
+    selection-background-color: #007AFF;
+    selection-color: #FFFFFF;
+    background-color: #FFFFFF;
+    outline: none;
+}
+/* 必须闭合！ */

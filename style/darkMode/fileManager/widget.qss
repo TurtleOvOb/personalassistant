@@ -1,0 +1,58 @@
+﻿#FileManager{
+background-color:#2C2C2E;
+        border-left:2px solid #3A3A3C;
+        border-right:2px solid #3A3A3C;
+}
+   #scrollAreaWidgetContents_4{
+         background-color:#2C2C2E;
+        }
+          #FM_Page{
+         background-color:#2C2C2E;
+          border-radius:10px;
+        }
+      /* 1. 整体表格背景与交替行背景 */
+QTableView#fileViewer {
+    background-color: #1C1C1E;           /* 常规行背景：深黑灰色 */
+    alternate-background-color: #2C2C2E; /* 交替行背景：稍浅的灰色 */
+    border: 1px solid #3A3A3C;           /* 边框：深色分隔线 */
+    gridline-color: #3A3A3C;             /* 网格线：与边框一致 */
+    outline: none;
+}
+
+/* 2. 确保所有单元格文字颜色正确 */
+QTableView#fileViewer::item {
+    color: #E5E5EA;                      /* 文字颜色：浅灰色 */
+    padding: 8px;
+    border: none;
+}
+
+/* 3. 选中状态的颜色 */
+QTableView#fileViewer::item:selected {
+    background-color: #27AE60;           /* 选中背景：iOS 深色模式专用的亮蓝色 */
+    color: #FFFFFF;                      /* 选中文字：白色 */
+}
+
+/* 4. 表头样式优化 */
+QHeaderView::section {
+    background-color: #2C2C2E;           /* 表头背景：比主背景略亮 */
+    color: #FFFFFF;                      /* 表头文字：纯白 */
+    padding: 4px 8px;
+    border: none;
+    border-bottom: 1px solid #3A3A3C;    /* 底部边框线 */
+    border-right: 1px solid #3A3A3C;     /* 右侧分隔线 */
+    font-weight: normal;
+}
+
+/* 5. 确保表头背景色完整填充 */
+QHeaderView {
+    background-color: #2C2C2E;
+    border: none;
+}
+
+/* 6. 特别补充：左上角全选按钮区域（防止出现白色方块） */
+QTableCornerButton::section {
+    background-color: #2C2C2E;
+    border: none;
+    border-bottom: 1px solid #3A3A3C;
+}
+

@@ -1,0 +1,61 @@
+ #btnAddFile{
+        background-color:#27AE60;
+        border-radius:6px;
+        color:white;
+         padding: 6px 12px;
+        }
+      #btnAddFile:hover {
+    background-color: #2ecc71;  /* 更亮一点的绿 */
+      }
+      #btnAddFile:pressed {
+    background-color: #1e8449;  /* 更深绿 */
+    }
+
+    #btnGetFilePath,#btnToFileLoc {
+    color: #6fcf97;   /* 柔和绿字体 */
+    background-color: rgba(40, 80, 60, 160);  /* 半透明深绿 */
+    border-radius: 4px;
+    padding: 6px 12px;
+}
+
+#btnGetFilePath:hover,#btnToFileLoc:hover {
+    background-color: rgba(60, 120, 90, 180); /* 更亮一点 */
+    color: #8fffb5;  /* 提升亮度 */
+}
+
+#btnGetFilePath:pressed，#btnToFileLoc:pressed{
+    background-color: rgba(30, 60, 45, 200); /* 更深一点 */
+    color: #5cd68d;
+}
+
+       #btnOpenFile{
+        color:white;
+        background-color:#007AFF;
+        border-radius:4px;
+        padding: 6px 12px;
+        }
+        #btnOpenFile:hover {
+        background-color: #339CFF;  /* iOS 风格亮蓝 */
+        }
+        #btnOpenFile:pressed {
+          background-color: #005ecb;  /* 深蓝 */
+        }
+
+        #btnDelFile{
+         color:#be6c6e;
+        background-color:rgba(66,52,52,255);
+        border-radius:4px;
+        padding: 6px 12px;
+        }
+     #btnDelFile:hover {
+    background-color: #5a3b3d;  /* 稍微提亮一点 */
+    color: #ff8a8a;             /* 提升危险感 */
+      }
+#btnDelFile:pressed {
+    background-color: #4a2f31;
+    color: #ff6b6b;
+}
+ #btnGetFilePath:pressed,#btnToFileLoc:pressed,#btnOpenFile:pressed,#btnDelFile:pressed
+ {
+    background-color: #2c2c2e;  /* 比 hover 更深一点 */
+}

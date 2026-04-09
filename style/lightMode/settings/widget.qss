@@ -1,0 +1,20 @@
+#input_DefalutPath{
+    background-color: rgba(0, 0, 0, 15); 
+    border: 1px solid #D1D1D6;
+    border-radius: 4px;
+    color: #333333;
+    padding: 2px 5px;
+}
+#input_DefalutPath:hover {
+    background-color: rgba(0, 0, 0, 30);
+    border: 1px solid #C7C7CC;
+}
+
+#btnSetPath{
+    background-color: transparent;
+    border: 1px solid #D1D1D6;
+    border-radius: 4px;
+}
+#btnSetPath:hover{
+  background-color: #E5E5EA; /* Ç³»ÒÉ«ÐüÍ£ */
+}

@@ -1,0 +1,53 @@
+﻿#FileManager {
+    background-color: #f7f7f7;   /* 主背景 */
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+}
+
+ #scrollAreaWidgetContents_4 {
+    background-color: #ffffff;   /* 内容区用白色 */
+}
+
+ #FM_Page {
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #e5e5e5;
+}
+/* 核心：必须强制指定 viewport 的背景 */
+/* 1. 整体表格背景与交替行背景 */
+QTableView#fileViewer {
+    background-color: #FFFFFF;           /* 常规行背景：白色 */
+    alternate-background-color: #F9F9FB; /* 交替行背景：极浅的灰色 */
+    border: 1px solid #D1D1D6;
+    outline: none;
+}
+
+/* 2. 确保所有单元格文字颜色正确 */
+QTableView#fileViewer::item {
+    color: #1e1e1e;                      /* 文字颜色：深灰/黑色 */
+    padding: 8px;
+    border: none;                        /* 既然用了交替色，建议去掉边框更清爽 */
+}
+
+/* 3. 选中状态的颜色 */
+QTableView#fileViewer::item:selected {
+    background-color: #007AFF;           /* 选中背景：iOS蓝色 */
+    color: #FFFFFF;                      /* 选中文字：白色 */
+}
+
+/* 4. 表头样式优化 (匹配你截图中的样子) */
+QHeaderView::section {
+    background-color: #F2F2F7;
+    color: #1e1e1e;
+    padding: 4px 8px;
+    border: none;
+    border-bottom: 1px solid #D1D1D6;
+    border-right: 1px solid #E5E5EA;
+    font-weight: normal;
+}
+
+/* 5. 确保表头背景色完整填充 */
+QHeaderView {
+    background-color: #F2F2F7;
+    border: none;
+}

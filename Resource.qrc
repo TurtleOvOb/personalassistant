@@ -1,0 +1,74 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>res/file.png</file>
+        <file>res/note.png</file>
+        <file>res/settings.png</file>
+        <file>res/TODO.png</file>
+        <file>res/qita.png</file>
+        <file>res/quanbu.png</file>
+        <file>res/tupian.png</file>
+        <file>res/wendang.png</file>
+        <file>res/biji.png</file>
+        <file>res/gongzuo.png</file>
+        <file>res/xuexi.png</file>
+        <file>res/shenghuo.png</file>
+        <file>res/qingchu.png</file>
+        <file>res/sousuo.png</file>
+        <file>res/chuangjian.png</file>
+        <file>res/shangjiantou.png</file>
+        <file>res/xiajiantou.png</file>
+        <file>res/fanhui.png</file>
+        <file>res/-todo.png</file>
+        <file>res/faburiqi.png</file>
+        <file>res/youxianx.png</file>
+        <file>res/code.png</file>
+    </qresource>
+    <qresource prefix="/new/prefix2">
+        <file>style/darkMode/todoList/button.qss</file>
+        <file>style/darkMode/todoList/inputWidget.qss</file>
+        <file>style/darkMode/todoList/widget.qss</file>
+        <file>style/darkMode/note/button.qss</file>
+        <file>style/darkMode/note/inputWidget.qss</file>
+        <file>style/darkMode/note/widget.qss</file>
+        <file>style/darkMode/fileManager/inputWidget.qss</file>
+        <file>style/darkMode/fileManager/widget.qss</file>
+        <file>style/darkMode/fileManager/button.qss</file>
+        <file>style/darkMode/settings/widget.qss</file>
+    </qresource>
+    <qresource prefix="/new/prefix3">
+        <file>style/lightMode/fileManager/button.qss</file>
+        <file>style/lightMode/fileManager/inputWidget.qss</file>
+        <file>style/lightMode/fileManager/widget.qss</file>
+        <file>style/lightMode/note/button.qss</file>
+        <file>style/lightMode/note/inputWidget.qss</file>
+        <file>style/lightMode/note/widget.qss</file>
+        <file>style/lightMode/todoList/button.qss</file>
+        <file>style/lightMode/todoList/inputWidget.qss</file>
+        <file>style/lightMode/todoList/widget.qss</file>
+        <file>style/lightMode/settings/widget.qss</file>
+    </qresource>
+    <qresource prefix="/blackIcon">
+        <file>res/black/biji.png</file>
+        <file>res/black/chuangjian.png</file>
+        <file>res/black/faburiqi.png</file>
+        <file>res/black/fanhui.png</file>
+        <file>res/black/file.png</file>
+        <file>res/black/gongzuo.png</file>
+        <file>res/black/note.png</file>
+        <file>res/black/qingchu.png</file>
+        <file>res/black/qita.png</file>
+        <file>res/black/quanbu.png</file>
+        <file>res/black/setting.png</file>
+        <file>res/black/shangjiantou.png</file>
+        <file>res/black/shenghuo.png</file>
+        <file>res/black/sousuo.png</file>
+        <file>res/black/TODO.png</file>
+        <file>res/black/-todo.png</file>
+        <file>res/black/tupian.png</file>
+        <file>res/black/wendang.png</file>
+        <file>res/black/xiajiantou.png</file>
+        <file>res/black/xuexi-.png</file>
+        <file>res/black/youxianx.png</file>
+        <file>res/black/code.png</file>
+    </qresource>
+</RCC>

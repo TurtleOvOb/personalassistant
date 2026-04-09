@@ -1,0 +1,63 @@
+
+#td_S_Frame{
+background-color:transparent;
+border-top:2px solid #3c3c3c;
+border-bottom:2px solid #3c3c3c;
+}
+
+   QScrollBar:vertical {
+    background: transparent;
+    width: 8px;
+    margin: 2px;
+}
+
+QScrollBar::handle:vertical {
+    background: #555;
+    border-radius: 4px;
+    min-height: 20px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #777;
+}
+
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+
+QScrollBar::add-page:vertical,
+QScrollBar::sub-page:vertical {
+    background: none;
+}
+       #personalassistantClass{
+        background-color:#2C2C2E;
+       }
+        #to_do_List{
+        background-color:#2C2C2E;
+        border-left:2px solid #3A3A3C;
+        border-right:2px solid #3A3A3C;
+        }
+        #scrollAreaWidgetContents{
+         background-color:#2C2C2E;
+        }
+        QScrollArea{
+        border:none;
+        }
+  
+        #sideBar{
+         background-color:#2C2C2E;
+        }
+        #to_do_List_Create{
+         background-color:#2C2C2E;
+    
+        }
+        #to_do_Detail{
+         background-color:#2C2C2E;
+         border-top:3px solid #434142;
+         padding:30px;
+        }
+      QWidget{
+      color:white;
+      }
+     

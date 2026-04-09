@@ -1,0 +1,8 @@
+#lineEdit_fileSearch{
+background-color:rgba(0,0,0,20);
+         border:1px solid gray;
+         border-radius:4px;
+}
+    #lineEdit_fileSearch:hover{
+         background-color:rgba(20,20,20,20);
+        }

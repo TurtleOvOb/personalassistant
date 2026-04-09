@@ -1,0 +1,20 @@
+#input_DefalutPath{
+        background-color:rgba(0,0,0,20);
+         border:1px solid gray;
+         border-radius:4px;
+}
+#input_DefalutPath:hover {
+   background-color:rgba(20,20,20,20);
+}
+
+#btnSetPath{
+         background-color:transparent;
+         border:1px solid gray;
+         border-radius:4px;
+}
+#btnSetPath:hover{
+ background-color:#3A3A3C;
+}
+#btnSetPath:pressed {
+    background-color: #2c2c2e;  /* 比 hover 更深一点 */
+}
