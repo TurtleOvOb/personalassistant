@@ -1,0 +1,107 @@
+/* --- 创建笔记按钮 (主动作：绿色) --- */
+#btnCreate_Note {
+    background-color: #34C759; /* 苹果绿 */
+    border-radius: 6px;
+    color: #FFFFFF;
+    padding: 6px 12px;
+    font-weight: bold;
+}
+
+#btnCreate_Note:hover {
+    background-color: #28A745;
+}
+
+#btnCreate_Note:pressed {
+    background-color: #1E7E34;
+}
+
+/* --- 搜索与清除按钮 (次要工具按钮) --- */
+#btnSearch_2{
+qproperty-icon:url(:/blackIcon/res/black/sousuo.png);
+}
+#btnClear_2 {
+qproperty-icon:url(:/blackIcon/res/black/qingchu.png);
+}
+#btnSearch_2, #btnClear_2 {
+    background-color: transparent;
+    border: none;
+    border-radius: 4px;
+
+}
+
+#btnSearch_2:hover, #btnClear_2:hover {
+    background-color: #E5E5EA; /* 浅灰色悬停 */
+}
+
+#btnSearch_2:pressed, #btnClear_2:pressed {
+    background-color: #D1D1D6; /* 点击加深 */
+}
+
+/* --- 下拉框 (保持与之前一致的浅色风格) --- */
+#comboBox_Note, #noteTypeBox {
+    background-color: #FFFFFF;
+    border: 1px solid #D1D1D6;
+    border-radius: 4px;
+    padding: 2px 5px;
+    color: #333333;
+}
+
+#comboBox_Note:hover, #noteTypeBox:hover {
+    background-color: #F9F9F9;
+    border-color: #C7C7CC;
+}
+
+/* --- 保存按钮 (核心动作：蓝色) --- */
+#btnSave_Note {
+    color: #FFFFFF;
+    background-color: #007AFF;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-weight: bold;
+}
+
+#btnSave_Note:hover {
+    background-color: #0062CC;
+}
+
+#btnSave_Note:pressed {
+    background-color: #0056B3;
+}
+
+/* --- 删除按钮 (危险动作：浅红底深红字) --- */
+#btnDel_Note {
+    color: #FF3B30;            /* 亮红字 */
+    background-color: #FFF2F1; /* 极浅红背景 */
+    border: 1px solid #FFCFCC; /* 微弱红色边框 */
+    border-radius: 4px;
+    padding: 6px 12px;
+}
+
+#btnDel_Note:hover {
+    background-color: #FF3B30; /* 悬浮变全红 */
+    color: #FFFFFF;            /* 字变白 */
+}
+
+#btnDel_Note:pressed {
+    background-color: #D70015; /* 深红反馈 */
+    color: #FFFFFF;
+}
+
+/* --- 导出按钮 (次要动作：浅蓝风格) --- */
+#btnExport_Note {
+    color: #007AFF;            /* 蓝色字 */
+    background-color: #EBF5FF; /* 极浅蓝背景 */
+    border: 1px solid #D0E7FF;
+    border-radius: 4px;
+    padding: 6px 12px;
+}
+
+#btnExport_Note:hover {
+    background-color: #D0E7FF;
+    color: #0056B3;
+}
+
+#btnExport_Note:pressed {
+    background-color: #BADAFF;
+    color: #004494;
+}

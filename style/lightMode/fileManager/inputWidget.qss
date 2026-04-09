@@ -1,0 +1,28 @@
+/* --- 文件搜索输入框 --- */
+#lineEdit_fileSearch {
+    background-color: #F2F2F7;    /* 稍微带点蓝调的极浅灰，比纯灰更高级 */
+    border: 1px solid #D1D1D6;    /* 标准浅色分割线 */
+    border-radius: 6px;           /* 稍微增加圆角，更显现代感 */
+    padding: 5px 8px;
+    color: #1C1C1E;               /* 近乎黑色的深灰，阅读压力小 */
+    selection-background-color: #007AFF; /* 选中文本时的背景色 */
+}
+
+/* 悬停状态：背景稍微加深一点 */
+#lineEdit_fileSearch:hover {
+    background-color: #E5E5EA;
+    border: 1px solid #C7C7CC;
+}
+
+/* 聚焦状态：蓝边 + 纯白背景 (核心交互反馈) */
+#lineEdit_fileSearch:focus {
+    background-color: #FFFFFF;    /* 聚焦时变白，提示用户正在输入 */
+    border: 1px solid #007AFF;    /* 苹果标准蓝 */
+    /* 如果你的 Qt 版本支持阴影，这行会让输入框“浮”起来 */
+    /* qproperty-alignment: 'AlignLeft | AlignVCenter'; */
+}
+
+/* 如果有占位符文字（提示语），可以调淡颜色 */
+#lineEdit_fileSearch [placeholderText] {
+    color: #8E8E93;
+}

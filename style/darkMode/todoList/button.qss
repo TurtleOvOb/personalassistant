@@ -1,0 +1,139 @@
+/*侧边栏*/
+#btnTo_do_List{
+qproperty-icon:url(:/new/prefix1/res/TODO.png);
+}
+#btnNoteManager{
+qproperty-icon:url(:/new/prefix1/res/note.png);
+}
+#btnFileManager{
+qproperty-icon:url(:/new/prefix1/res/file.png);
+}
+#btnSettings{
+qproperty-icon:url(:/new/prefix1/res/settings.png);
+}
+#btnTo_do_List, #btnNoteManager, #btnFileManager, #btnSettings {
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+   color: white;
+}
+#btnTo_do_List:hover, #btnNoteManager:hover, #btnFileManager:hover, #btnSettings:hover {
+    background-color: #3A3A3C;
+}
+
+#btnTo_do_List:pressed, #btnNoteManager:pressed, #btnFileManager:pressed, #btnSettings:pressed {
+    background-color: #2c2c2e;
+}
+        /*中间栏*/
+        #btnCreate_td{
+        background-color:#27AE60;
+        border-radius:6px;
+        color:white;
+        }
+      #btnCreate_td:hover {
+    background-color: #2ecc71;  /* 更亮一点的绿 */
+      }
+      #btnCreate_td:pressed {
+    background-color: #1e8449;  /* 更深绿 */
+    }
+
+#btnSearch{
+         background-color:transparent;
+         border:none;
+         border-radius:4px;
+         qproperty-icon:url(:/new/prefix1/res/sousuo.png);
+        }
+     #btnSearch:hover{
+     background-color:#3A3A3C;
+        }
+        #btnClear{
+         background-color:transparent;
+         border:none;
+         border-radius:4px;
+         qproperty-icon:url(:/new/prefix1/res/qingchu.png);
+        }
+        #btnClear:hover{
+         background-color:#3A3A3C;
+        }
+             #btnSearch:pressed,
+#btnClear:pressed {
+    background-color: #2c2c2e;  /* 比 hover 更深一点 */
+}
+/*右侧栏*/
+        #btnBack{
+         background-color:rgba(0,0,0,20);
+         border:none;
+         border-radius:20px;
+
+        }
+        #btnBack:hover {
+          background-color:#3A3A3C;
+        }
+
+        #btnBack:pressed{
+          background-color: #2c2c2e;
+         }
+ #btnEdit {
+    color: #6fcf97;   /* 柔和绿字体 */
+    background-color: rgba(40, 80, 60, 160);  /* 半透明深绿 */
+    border-radius: 4px;
+    padding: 6px 12px;
+}
+
+#btnEdit:hover {
+    background-color: rgba(60, 120, 90, 180); /* 更亮一点 */
+    color: #8fffb5;  /* 提升亮度 */
+}
+
+#btnEdit:pressed{
+    background-color: rgba(30, 60, 45, 200); /* 更深一点 */
+    color: #5cd68
+ }
+    /* 1. 保存/创建按钮 - 界面最主要的动作，使用亮蓝色或跟随你的绿色主题 */
+#btnSave {
+    color: white;
+    background-color: #0A84FF; /* 苹果标准的 SF Blue，非常有活力 */
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-weight: bold;
+    border: none;
+}
+#btnSave:hover {
+    background-color: #409CFF; /* 悬浮提亮 */
+}
+#btnSave:pressed {
+    background-color: #0071E3; /* 点击加深 */
+}
+
+/* 2. 导出按钮 - 次要动作，降低存在感，融入背景 */
+#btnExport {
+    color: #E5E5E7; /* 浅灰色文字 */
+    background-color: #3A3A3C; /* 略深于主背景的灰色 */
+    border-radius: 6px;
+    padding: 6px 16px;
+    border: 1px solid #48484A; /* 增加纤细边框，提升精致感 */
+}
+#btnExport:hover {
+    background-color: #48484A;
+    color: white;
+}
+#btnExport:pressed {
+    background-color: #2C2C2E;
+}
+
+/* 3. 删除按钮 - 危险动作，不点时不应抢戏，点时要有警示感 */
+#btnDel {
+    color: #FF453A; /* 警告红 */
+    background-color: rgba(255, 69, 58, 0.15); /* 极低饱和度的红色背景，像毛玻璃 */
+    border-radius: 6px;
+    padding: 6px 16px;
+    border: 1px solid rgba(255, 69, 58, 0.3);
+}
+#btnDel:hover {
+    background-color: #FF453A; /* 悬浮变成全红 */
+    color: white;
+}
+#btnDel:pressed {
+    background-color: #D70015; /* 深红反馈 */
+}
+

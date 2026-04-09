@@ -1,0 +1,98 @@
+ #btnCreate_Note{
+        background-color:#27AE60;
+        border-radius:6px;
+        color:white;
+         padding: 6px 12px;
+        }
+      #btnCreate_Note:hover {
+    background-color: #2ecc71;  /* 更亮一点的绿 */
+      }
+      #btnCreate_Note:pressed {
+    background-color: #1e8449;  /* 更深绿 */
+    }
+
+#btnSearch_2{
+         background-color:transparent;
+         border:none;
+         border-radius:4px;
+         qproperty-icon:url(:/new/prefix1/res/sousuo.png);
+        }
+     #btnSearch_2:hover{
+     background-color:#3A3A3C;
+        }
+        #btnClear_2{
+         background-color:transparent;
+         border:none;
+         border-radius:4px;
+         qproperty-icon:url(:/new/prefix1/res/qingchu.png);
+        }
+        #btnClear_2:hover{
+         background-color:#3A3A3C;
+        }
+             #btnSearch_2:pressed,
+#btnClear_2:pressed {
+    background-color: #2c2c2e;  /* 比 hover 更深一点 */
+}
+/*右侧栏*/
+
+#comboBox_Note{
+ 
+         border:none;
+         border-radius:4px;
+}
+#comboBox_Note:hover{
+
+}
+#noteTypeBox{
+ 
+         border:none;
+         border-radius:4px;
+}
+#noteTypeBox:hover{
+
+}
+
+
+       #btnSave_Note{
+        color:white;
+        background-color:#007AFF;
+        border-radius:4px;
+        padding: 6px 12px;
+        }
+        #btnSave_Note:hover {
+    background-color: #339CFF;  /* iOS 风格亮蓝 */
+}
+#btnSave_Note:pressed {
+    background-color: #005ecb;  /* 深蓝 */
+}
+
+        #btnDel_Note{
+        color:#be6c6e;
+        background-color:rgba(66,52,52,255);
+        border-radius:4px;
+        padding: 6px 12px;
+        }
+        #btnDel_Note:hover {
+    background-color: #5a3b3d;  /* 稍微提亮一点 */
+    color: #ff8a8a;             /* 提升危险感 */
+}
+#btnDel_Note:pressed {
+    background-color: #4a2f31;
+    color: #ff6b6b;
+}
+
+        #btnExport_Note{
+        color:#5381A5;
+        background-color:#383b4a;
+        border-radius:4px;
+        padding: 6px 12px;
+        }
+        #btnExport_Note:hover {
+    background-color: #4a5060;  /* 提亮背景 */
+    color: #6ea6d1;             /* 提亮文字 */
+}
+#btnExport_Note:pressed {
+    background-color: #2f3440;
+    color: #7fb0d6;
+}
+

@@ -1,0 +1,144 @@
+/* --- 侧边栏导航按钮 --- */
+#btnTo_do_List{
+qproperty-icon:url(:/blackIcon/res/black/TODO.png);
+}
+#btnNoteManager{
+qproperty-icon:url(:/blackIcon/res/black/note.png);
+}
+#btnFileManager{
+qproperty-icon:url(:/blackIcon/res/black/file.png);
+}
+#btnSettings{
+qproperty-icon:url(:/blackIcon/res/black/setting.png);
+}
+#btnTo_do_List, #btnNoteManager, #btnFileManager, #btnSettings {
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    color: #3A3A3C;
+}
+
+#btnTo_do_List:hover, #btnNoteManager:hover, #btnFileManager:hover, #btnSettings:hover {
+    background-color: #E5E5EA;
+}
+
+#btnTo_do_List:pressed, #btnNoteManager:pressed, #btnFileManager:pressed, #btnSettings:pressed {
+    background-color: #D1D1D6;
+}
+
+/* --- 中间栏功能按钮 --- */
+#btnCreate_td {
+    background-color: #34C759;
+    border-radius: 6px;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+#btnCreate_td:hover {
+    background-color: #28A745;
+}
+
+#btnCreate_td:pressed {
+    background-color: #1E7E34;
+}
+#btnSearch{
+qproperty-icon:url(:/blackIcon/res/black/sousuo.png);
+}
+#btnClear{
+qproperty-icon:url(:/blackIcon/res/black/qingchu.png);
+}
+#btnSearch, #btnClear {
+    background-color: transparent;
+    border: none;
+    border-radius: 4px;
+}
+
+#btnSearch:hover, #btnClear:hover {
+    background-color: #E5E5EA;
+}
+
+#btnSearch:pressed, #btnClear:pressed {
+    background-color: #D1D1D6;
+}
+
+/* --- 右侧详情栏按钮 --- */
+#btnBack {
+    background-color: #F2F2F7;
+    border: none;
+    border-radius: 20px;
+}
+
+#btnBack:hover {
+    background-color: #E5E5EA;
+}
+
+#btnBack:pressed {
+    background-color: #D1D1D6;
+}
+
+#btnEdit {
+    color: #1E7E34;
+    background-color: #E7F6ED;
+    border-radius: 4px;
+    padding: 6px 12px;
+}
+
+#btnEdit:hover {
+    background-color: #D1EDDD;
+    color: #155D27;
+}
+
+#btnEdit:pressed {
+    background-color: #B7E1C8;
+}
+
+#btnSave {
+    color: #FFFFFF;
+    background-color: #007AFF;
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-weight: bold;
+    border: none;
+}
+
+#btnSave:hover {
+    background-color: #0062CC;
+}
+
+#btnSave:pressed {
+    background-color: #0056B3;
+}
+
+#btnExport {
+    color: #3A3A3C;
+    background-color: #FFFFFF;
+    border-radius: 6px;
+    padding: 6px 16px;
+    border: 1px solid #D1D1D6;
+}
+
+#btnExport:hover {
+    background-color: #F2F2F7;
+    border-color: #C7C7CC;
+}
+
+#btnExport:pressed {
+    background-color: #E5E5EA;
+}
+
+#btnDel {
+    color: #FF3B30;
+    background-color: #FFF2F1;
+    border-radius: 6px;
+    padding: 6px 16px;
+    border: 1px solid #FFCFCC;
+}
+
+#btnDel:hover {
+    background-color: #FF3B30;
+    color: #FFFFFF;
+}
+
+#btnDel:pressed {
+    background-color: #D70015;
+}

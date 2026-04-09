@@ -1,0 +1,72 @@
+/* --- 添加文件按钮 (主动作：绿色) --- */
+#btnAddFile {
+    background-color: #34C759;
+    border-radius: 6px;
+    color: #FFFFFF;
+    padding: 6px 12px;
+}
+
+#btnAddFile:hover {
+    background-color: #28A745;
+}
+
+#btnAddFile:pressed {
+    background-color: #1E7E34;
+}
+#btnSearch_File{
+qproperty-icon:url(:/blackIcon/res/black/sousuo.png);
+   background-color: transparent;
+    border-radius: 4px;
+    padding: 6px 12px;
+}
+/* --- 获取路径/定位文件 (次要动作：淡绿风格) --- */
+#btnGetFilePath, #btnToFileLoc {
+    color: #1E7E34;
+    background-color: #E7F6ED;
+    border-radius: 4px;
+    padding: 6px 12px;
+}
+
+#btnGetFilePath:hover, #btnToFileLoc:hover {
+    background-color: #D1EDDD;
+    color: #155D27;
+}
+
+#btnGetFilePath:pressed, #btnToFileLoc:pressed {
+    background-color: #B7E1C8;
+    color: #10461D;
+}
+
+/* --- 打开文件 (主动作：蓝色) --- */
+#btnOpenFile {
+    color: #FFFFFF;
+    background-color: #007AFF;
+    border-radius: 4px;
+    padding: 6px 12px;
+}
+
+#btnOpenFile:hover {
+    background-color: #0062CC;
+}
+
+#btnOpenFile:pressed {
+    background-color: #0056B3;
+}
+
+/* --- 删除文件 (危险动作：淡红风格) --- */
+#btnDelFile {
+    color: #FF3B30;
+    background-color: #FFF2F1;
+    border-radius: 4px;
+    padding: 6px 12px;
+}
+
+#btnDelFile:hover {
+    background-color: #FF3B30;
+    color: #FFFFFF;
+}
+
+#btnDelFile:pressed {
+    background-color: #D70015;
+    color: #FFFFFF;
+}

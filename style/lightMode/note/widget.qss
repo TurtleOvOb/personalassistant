@@ -1,0 +1,27 @@
+/* --- 笔记管理主容器 --- */
+#NoteManger {
+    background-color: #F2F2F7;    /* 列表区域使用浅灰色 */
+    border-left: 1px solid #E5E5EA; /* 变细的浅色分割线 */
+    border-right: 1px solid #E5E5EA;
+}
+
+/* --- 滚动区域内部容器 --- */
+#scrollAreaWidgetContents_2 {
+    background-color: #F2F2F7;    /* 保持与容器一致 */
+}
+
+/* --- 笔记页面/编辑器面板 --- */
+#NM_Page {
+    background-color: #FFFFFF;    /* 编辑区域改用纯白，利于专注 */
+    border-radius: 10px;
+    /* 在浅色模式下，圆角配合纯白背景非常有质感 */
+}
+
+/* --- 笔记标题标签/顶部分割线 --- */
+#label_NoteTitle {
+    background-color: transparent;
+    border-top: 1px solid #D1D1D6; /* 使用标准的淡灰色线条 */
+    color: #1C1C1E;               /* 确保文字颜色为深色 */
+    font-weight: bold;
+    padding-top: 5px;
+}
