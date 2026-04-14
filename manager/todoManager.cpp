@@ -3,6 +3,7 @@
 
 todoManager::todoManager()
 {
+	
 }
 
 todoManager::~todoManager()
@@ -16,6 +17,8 @@ toDoKard* todoManager::create_toDoKard(QWidget*parent,QString title, QString des
 	kard->setDescription(des);
 	kard->setDate(date);
 	kard->setPriority(prior);
+	int id=dao.addKard(title, des, date, prior);
+	kard->setId(id);
 	todoKardList.append(kard);
 	return kard;
 }
@@ -37,11 +40,6 @@ bool todoManager::delete_toDoKard(BaseKard* toDel_Kard)
 }
 
 
-
-void todoManager::save_toDoKard()
-{
-}
-
 void todoManager::search_toDoKard(QString title)
 {
 	qDebug() << "start searching";
@@ -55,11 +53,16 @@ void todoManager::search_toDoKard(QString title)
 	qDebug() << "search done!";
 }
 
-
-
 QVector<toDoKard*> todoManager::getKardList()
 {
 	return todoKardList;
+}
+
+
+QVector<toDoKard*> todoManager::loadFromDataBase(QWidget* parent)
+{
+	QVector<toDoKard*> kardList=dao.getToDoKards(parent);
+	return kardList;
 }
 
 

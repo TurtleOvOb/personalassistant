@@ -88,6 +88,11 @@ QString toDoKard::Priority()
 	return label_Priority_level->text();
 }
 
+void toDoKard::setId(int id)
+{
+	this->id = id;
+}
+
 void toDoKard::setDescription(QString des)
 {
 	description = des;

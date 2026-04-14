@@ -13,12 +13,12 @@ class toDoKard :public BaseKard {
 public:
 	explicit toDoKard(QWidget*parent);
 	~toDoKard();
-
+ 
 	QString Description();
 	QString Title();
 	QDate Date();
 	QString Priority();
-
+	void setId(int id);
 	void setDescription(QString des);
 	void setTitle(QString title);
 	void setDate(QDate Date);
@@ -29,7 +29,7 @@ signals:
 	void doubleClicked(toDoKard* kard);
 	
 private:
-	
+	int id = 0;
 	QString description;
 	QDate DeadLine;
 	QVBoxLayout* mainLayout;
