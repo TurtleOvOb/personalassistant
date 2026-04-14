@@ -24,6 +24,7 @@ personalassistant::personalassistant(QWidget* parent)
     uiConfig();
     initSlots();
     readConfig();
+    loadFromDataBase();
     fileKard::Type type[5] = { fileKard::Default ,fileKard::Doc,fileKard::Img ,fileKard::Code ,fileKard::Else };
     for (int i = 0; i < 5; i++) {
         fileKard* kard = file->createFileKard(this, type[i], themeManager::instance()->currentTheme());
@@ -131,6 +132,17 @@ void personalassistant::fillEditpage(BaseKard* kard)
     }
 }
 
+void personalassistant::loadFromDataBase()
+{//从数据库添加todokard
+    int count = 0;
+    QVector<toDoKard*>kardList=todo->loadFromDataBase(this);
+    for (toDoKard* kard : kardList) {
+        ui->verticalLayout_23->addWidget(kard);
+        count++;
+    }
+    qDebug() << "已成功加载" << count << "条数据";
+}
+
 void personalassistant::readConfig()
 {
     QFile file("config.ini");
@@ -217,6 +229,7 @@ void personalassistant::save_ToDoList()
     toDoKard* kard =todo->create_toDoKard(
     this, ui->input_Title->text(), ui->input_Description->toPlainText(), 
     ui->input_DeadLine->date(), ui->comboBox_Prior->currentText());
+  
 
     ui->verticalLayout_23->addWidget(kard);
     //刷新toDoList卡片的选中效果

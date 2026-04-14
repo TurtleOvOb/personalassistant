@@ -2,6 +2,7 @@
 #include"../todo/toDoKard.h"
 #include<qvector.h>
 #include<qwidget.h>
+#include"todoDao.h"
 class todoManager :public QObject{
 	Q_OBJECT
 public:
@@ -9,13 +10,13 @@ public:
 	~todoManager();
 	toDoKard* create_toDoKard(QWidget* parent,QString title,QString des, QDate date,QString prior);
 	bool delete_toDoKard(BaseKard*toDel_Kard);
-	void save_toDoKard();//保存到数据库？
 	void search_toDoKard(QString title);
-	QVector<toDoKard*> getKardList();
-
+	QVector<toDoKard*>getKardList();
+	QVector<toDoKard*> loadFromDataBase(QWidget* parent);
     signals :
 	void searchDone(QVector<toDoKard*>results);
 private:
+	todoDao dao;
 	QVector<toDoKard*>todoKardList;
 
 };

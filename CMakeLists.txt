@@ -15,6 +15,7 @@ find_package(Qt${QT_VERSION_MAJOR}
         Core
         Gui
         Widgets
+        Sql
 )
 qt_standard_project_setup()
 
@@ -51,6 +52,16 @@ set(PROJECT_SOURCES
     manager/fileManager.cpp
     manager/themeManager.h
     manager/themeManager.cpp
+
+    Dao/todoDao.h
+    Dao/todoDao.cpp
+    Dao/NoteDao.h
+    Dao/NoteDao.cpp
+    Dao/fileDao.h
+    Dao/fileDao.cpp
+
+    utils/DBManager.h
+    utils/DBManager.cpp
 
     style/darkMode/todoList/button.qss
     style/darkMode/todoList/inputWidget.qss
@@ -92,6 +103,8 @@ target_include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/note
     ${CMAKE_CURRENT_SOURCE_DIR}/file
     ${CMAKE_CURRENT_SOURCE_DIR}/manager
+     ${CMAKE_CURRENT_SOURCE_DIR}/Dao
+    ${CMAKE_CURRENT_SOURCE_DIR}/utils
 
 )
 
@@ -105,5 +118,6 @@ target_link_libraries(${PROJECT_NAME}
         Qt::Core
         Qt::Gui
         Qt::Widgets
+        Qt::Sql
 )
 

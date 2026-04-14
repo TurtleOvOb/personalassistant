@@ -13,6 +13,9 @@
 #include<qsettings.h>
 //#include<qsortfilterproxymodel.h>
 #include<qclipboard.h>
+#include"todoDao.h"
+//#include"NoteDao.h"
+//#include"fileDao.h"
 class toDoKard;
 class NoteKard;
 class fileKard;
@@ -32,6 +35,9 @@ private:
     todoManager* todo;
     noteManager* note;
     fileManager *file;
+    todoDao todoDAO;
+    //noteDao noteDAO;
+    //fileDao fileDAO;
     bool curTheme;
     bool isCreate_Note;
     bool isCreate;
@@ -45,6 +51,7 @@ private:
     void handleKardAction(BaseKard*kard);
     void fillEditpage(BaseKard*kard);
     //void updateIconTheme();
+    void loadFromDataBase();
     void readConfig();
     void closeEvent(QCloseEvent*event)override;
 
