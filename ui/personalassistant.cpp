@@ -137,6 +137,7 @@ void personalassistant::loadFromDataBase()
     int count = 0;
     QVector<toDoKard*>kardList=todo->loadFromDataBase(this);
     for (toDoKard* kard : kardList) {
+        connect(kard, &toDoKard::doubleClicked, this, &personalassistant::switchToShowPage);
         ui->verticalLayout_23->addWidget(kard);
         count++;
     }

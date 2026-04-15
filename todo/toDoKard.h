@@ -13,7 +13,7 @@ class toDoKard :public BaseKard {
 public:
 	explicit toDoKard(QWidget*parent);
 	~toDoKard();
- 
+	int Id();
 	QString Description();
 	QString Title();
 	QDate Date();

@@ -28,6 +28,10 @@ bool todoManager::delete_toDoKard(BaseKard* toDel_Kard)
 	qDebug() << "deleting curKard";
 	if (toDel_Kard != nullptr) {
 	todoKardList.removeOne(toDel_Kard);
+	auto *kard = qobject_cast<toDoKard*>(toDel_Kard);
+	if (dao.deleteKard(kard->Id())) {
+		qDebug() << "delete todoKard from database failed";
+	}
 	toDel_Kard->hide();
 	toDel_Kard->deleteLater();
 	toDel_Kard = nullptr;
