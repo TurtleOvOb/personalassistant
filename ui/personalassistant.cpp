@@ -97,20 +97,21 @@ void personalassistant::handleKardAction(BaseKard* kard)
 {
     if (!kard)return;
 
-    if (auto todo = qobject_cast<toDoKard*>(kard)) {
+    if (auto todoKard = qobject_cast<toDoKard*>(kard)) {
         //创建edit卡片状态下才修改卡片信息
         if (isCreate || isEdit) {
             //修改卡片信息
-            todo->setTitle(ui->input_Title->text());
-            todo->setDescription(ui->input_Description->toPlainText());
-            todo->setDate(ui->input_DeadLine->date());
-            todo->setPriority(ui->comboBox_Prior->currentText());
+            todoKard->setTitle(ui->input_Title->text());
+            todoKard->setDescription(ui->input_Description->toPlainText());
+            todoKard->setDate(ui->input_DeadLine->date());
+            todoKard->setPriority(ui->comboBox_Prior->currentText());
+            todo->update_toDoKard(todoKard);
         }
         //填充显示页面
-        ui->label_S_Title->setText(todo->Title());
-        ui->input_S_Description->setPlainText(todo->Description());
-        ui->label_S_DeadLine->setText(todo->Date().toString("yyyy/MM/dd"));
-        ui->label_S_Priority->setText(todo->Priority());
+        ui->label_S_Title->setText(todoKard->Title());
+        ui->input_S_Description->setPlainText(todoKard->Description());
+        ui->label_S_DeadLine->setText(todoKard->Date().toString("yyyy/MM/dd"));
+        ui->label_S_Priority->setText(todoKard->Priority());
         return;
     }
     //点击创建，isCreate_Note为1，btnSave_Note变为创建,isCreate_Note为0时，btnSave_Note变为保存
