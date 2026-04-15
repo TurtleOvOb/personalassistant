@@ -68,6 +68,10 @@ toDoKard::~toDoKard()
 	{
 	}
 
+int toDoKard::Id() {
+	return this->id;
+}
+
 QString toDoKard::Description()
 {
 	return description;
