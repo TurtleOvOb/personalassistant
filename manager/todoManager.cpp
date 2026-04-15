@@ -43,6 +43,17 @@ bool todoManager::delete_toDoKard(BaseKard* toDel_Kard)
 	return false;
 }
 
+bool todoManager::update_toDoKard(toDoKard* kard)
+{
+	if (dao.updateKard(kard->Id(), kard->Title(),
+		kard->Description(), kard->Date(), kard->Priority())) {
+		qDebug() << "update success";
+		return true;
+	}
+	qDebug() << "update failed";
+	return false;
+}
+
 
 void todoManager::search_toDoKard(QString title)
 {

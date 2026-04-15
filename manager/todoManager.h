@@ -10,6 +10,7 @@ public:
 	~todoManager();
 	toDoKard* create_toDoKard(QWidget* parent,QString title,QString des, QDate date,QString prior);
 	bool delete_toDoKard(BaseKard*toDel_Kard);
+	bool update_toDoKard(toDoKard* kard);
 	void search_toDoKard(QString title);
 	QVector<toDoKard*>getKardList();
 	QVector<toDoKard*> loadFromDataBase(QWidget* parent);

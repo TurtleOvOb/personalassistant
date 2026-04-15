@@ -12,7 +12,7 @@ public:
 	~todoDao();
 	int addKard(QString title,QString des, QDate deadLine , QString priority);
 	bool deleteKard(int id);
-	bool updateKard();
+	bool updateKard(int id, QString title, QString des, QDate deadLine, QString priority);
 	QVector<toDoKard*> getToDoKards(QWidget* parent);
 private:
 	bool initQuery();

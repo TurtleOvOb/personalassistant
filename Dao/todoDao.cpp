@@ -92,8 +92,31 @@ bool todoDao::deleteKard(int id)
     return false;
 }
 
-bool todoDao::updateKard()
+bool todoDao::updateKard(int id, QString title, QString des, QDate deadLine, QString priority)
 {
+    QSqlDatabase db = DBManager::instance();
+    QSqlQuery query(db);
+    if (!db.open()) {
+        qDebug() << "database open failed";
+    }
+    QString sql = R"(
+UPDATE todo 
+SET title=(:title),des=(:des),deadLine=(:deadLine),priority=(:priority) 
+WHERE id=(:id)
+)";
+    query.prepare(sql);
+    query.bindValue(":id", id);
+    query.bindValue(":title", title);
+    query.bindValue(":des", des);
+    query.bindValue(":deadLine", deadLine);
+    query.bindValue(":priority", priority);
+    if (query.exec()) {
+        qDebug() << "update todokard success";
+        db.close();
+        return true;
+    }
+    qDebug() << "update todokard failed";
+    db.close();
     return false;
 }
 
