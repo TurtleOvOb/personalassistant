@@ -57,6 +57,10 @@ NoteKard::~NoteKard()
 {
 }
 
+void NoteKard::setId(int id) {
+	this->id = id;
+}
+
 void NoteKard::setTitle(QString title)
 {
 	this->title->setText(title);
@@ -88,6 +92,10 @@ void NoteKard::setType(int type, themeManager::Theme theme)
 		break;
 	}
 	setIcon(theme);
+}
+
+int NoteKard::Id() {
+	return this->id;
 }
 
 QString NoteKard::Title()

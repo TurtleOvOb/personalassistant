@@ -115,10 +115,11 @@ void personalassistant::handleKardAction(BaseKard* kard)
         return;
     }
     //点击创建，isCreate_Note为1，btnSave_Note变为创建,isCreate_Note为0时，btnSave_Note变为保存
-    if (auto note = qobject_cast<NoteKard*>(kard)) {
-        note->setTitle(ui->input_Notetitle->text());
-        note->setDes(ui->input_Note->toPlainText());
-        note->setType(ui->noteTypeBox->currentIndex(),themeManager::instance()->currentTheme());
+    if (auto noteKard = qobject_cast<NoteKard*>(kard)) {
+        noteKard->setTitle(ui->input_Notetitle->text());
+        noteKard->setDes(ui->input_Note->toPlainText());
+        noteKard->setType(ui->noteTypeBox->currentIndex(),themeManager::instance()->currentTheme());
+        note->update_noteKard(noteKard);
     }
 
 }
@@ -136,13 +137,40 @@ void personalassistant::fillEditpage(BaseKard* kard)
 void personalassistant::loadFromDataBase()
 {//从数据库添加todokard
     int count = 0;
-    QVector<toDoKard*>kardList=todo->loadFromDataBase(this);
-    for (toDoKard* kard : kardList) {
+    QVector<toDoKard*>todoKardList = todo->loadFromDataBase(this);
+    QVector<NoteKard*>noteKardList = note->loadFromDataBase(this);
+    QVector<QString>filePaths = file->loadFromDataBase();
+    for (toDoKard* kard : todoKardList) {
         connect(kard, &toDoKard::doubleClicked, this, &personalassistant::switchToShowPage);
         ui->verticalLayout_23->addWidget(kard);
         count++;
     }
-    qDebug() << "已成功加载" << count << "条数据";
+    for (NoteKard* kard : noteKardList) {
+        connect(kard, &NoteKard::doubleClicked, this, &personalassistant::switchToShowPage);
+        ui->verticalLayout_22->addWidget(kard);
+        count++;
+    }
+    QString fileName;
+    QString lastTime;
+    QString fileType;
+    qint64 fileSize;
+    for (QString filePath : filePaths) {
+        QFileInfo info(filePath);
+        fileName = info.fileName();
+        lastTime = info.lastModified().toString("yyyy-MM-dd hh:mm:ss");
+        if (info.isDir()) {
+            fileType = "director";
+        };
+        fileType = info.suffix();
+        fileSize = info.size();
+        QList<QStandardItem*>rowInfo;
+        rowInfo.append(new QStandardItem(fileName));
+        rowInfo.append(new QStandardItem(lastTime));
+        rowInfo.append(new QStandardItem(fileType));
+        rowInfo.append(new QStandardItem(QString::number(fileSize)));
+        model->appendRow(rowInfo);
+    }
+qDebug() << "已成功加载" << count << "条数据";
 }
 
 void personalassistant::readConfig()
@@ -533,9 +561,10 @@ void personalassistant::switchToShowPage(BaseKard* kard)
         //cur_Selected_Kard = kard;
         qDebug() << "选中当前Notekard";
         //填充Note卡片信息到当前页面
+        qDebug() << note->Title() << note->Des() << note->type;
         ui->input_Notetitle->setText(note->Title());
         ui->input_Note->setPlainText(note->Des());
-        ui->comboBox_Note->setCurrentIndex(note->type);
+        ui->noteTypeBox->setCurrentIndex(note->type);
     }
 
 }
