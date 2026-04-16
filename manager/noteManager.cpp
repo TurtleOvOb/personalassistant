@@ -14,6 +14,7 @@ NoteKard* noteManager::create_NoteKard(QWidget* parent, QString title, QString d
     kard->setTitle(title);
     kard->setDes(des);
     kard->setType(type,theme);
+    dao.addKard(title, des, type);
     noteKardList.append(kard);
 	return kard;
 }
@@ -21,14 +22,23 @@ NoteKard* noteManager::create_NoteKard(QWidget* parent, QString title, QString d
 bool noteManager::delete_NoteKard(BaseKard* toDel_Kard)
 {
     noteKardList.removeOne(toDel_Kard);
+    auto notekard = qobject_cast<NoteKard*>(toDel_Kard);
+    dao.deleteKard(notekard->Id());
     toDel_Kard->hide();
     toDel_Kard->deleteLater();
     toDel_Kard = nullptr;
     return true;
 }
 
-void noteManager::save_NoteKard()
+bool noteManager::update_noteKard(NoteKard* kard)
 {
+    if (dao.updateKard(kard->Id(), kard->Title(),
+        kard->Des(), kard->type)) {
+        qDebug() << "update success";
+        return true;
+    }
+    qDebug() << "update failed";
+    return false;
 }
 
 void noteManager::search_NoteKard(QString title)
@@ -43,6 +53,7 @@ void noteManager::search_NoteKard(QString title)
     emit searchDone(results);
     qDebug() << "search done!";
 }
+
 void noteManager::sortBy(int type)
 {
     NoteKard::noteType Type;
@@ -55,10 +66,10 @@ void noteManager::sortBy(int type)
         Type = NoteKard::Work;
         break;
     case 2:
-        Type = NoteKard::Study;
+        Type = NoteKard::Daily;
         break;
     case 3:
-        Type = NoteKard::Daily;
+        Type = NoteKard::Study;
         break;
     default:
         break;
@@ -85,4 +96,10 @@ void noteManager::sortBy(int type)
 
 QVector<NoteKard*> noteManager::getNoteKardList() {
     return noteKardList;
+}
+
+QVector<NoteKard*>noteManager::loadFromDataBase(QWidget*parent) {
+    noteKardList = dao.getNoteKards(parent);
+    return noteKardList;
+
 }

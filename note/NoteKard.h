@@ -10,13 +10,16 @@
 class NoteKard :public BaseKard {
 	Q_OBJECT
 public:
-	enum noteType{Default,Work,Daily,Study};
+	enum noteType{Default,Work,Study,Daily};
+
 	 NoteKard(QWidget* parent);
 	~NoteKard();
+	void setId(int id);
 	void setTitle(QString title);
 	void setDes(QString des);
 	void setType(int type, themeManager::Theme theme);
 	void setIcon(themeManager::Theme theme)override;
+	int Id();
 	QString Title();
 	QString Des();
 	noteType type=Default;
@@ -31,6 +34,7 @@ private:
 	QGridLayout* gLayout;
 	QToolButton* icon_Note;
 	
+	int id=0;
 	QLabel* desInput;
     QString des;
 	QLabel* title;

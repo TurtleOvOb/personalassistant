@@ -1,4 +1,5 @@
 #include "todoDao.h"
+#include "NoteDao.h"
 
 todoDao::todoDao()
 {

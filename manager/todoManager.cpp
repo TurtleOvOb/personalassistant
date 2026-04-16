@@ -76,8 +76,8 @@ QVector<toDoKard*> todoManager::getKardList()
 
 QVector<toDoKard*> todoManager::loadFromDataBase(QWidget* parent)
 {
-	QVector<toDoKard*> kardList=dao.getToDoKards(parent);
-	return kardList;
+	todoKardList =dao.getToDoKards(parent);
+	return todoKardList;
 }
 
 

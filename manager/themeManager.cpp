@@ -45,12 +45,10 @@ QString themeManager::switchTheme(int index) {
     QFile file;
     for (QFileInfo mode : dirList) {
         QString dirPath = mode.absoluteFilePath();
-        qDebug() << "dirName" << dirPath;
         QDir dir(dirPath);
         QFileInfoList fileInfoList = dir.entryInfoList();
         for (QFileInfo info : fileInfoList) {
             QString filePath = info.absoluteFilePath();
-            qDebug() << "fileName" << filePath;
             file.setFileName(filePath);
             QTextStream in(&file);
             if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {

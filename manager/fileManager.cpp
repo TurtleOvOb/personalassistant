@@ -59,6 +59,7 @@ bool fileManager::loadFile(QStringList&filePaths)
 		rowInfo.append(new QStandardItem(fileType));
 		rowInfo.append(new QStandardItem(QString::number(fileSize)));
 		model->appendRow(rowInfo);
+		dao.addFile(fileName);
 	}
 	return true;
 }
@@ -84,6 +85,7 @@ bool fileManager::deleteFile(QModelIndex& index)
 	QFile file(files.at(rowIndex));
     model->removeRow(rowIndex);
 	files.remove(rowIndex);
+	dao.deleteFile(rowIndex);
 	if (!file.exists()) {
 		qDebug() << "file doesn't exists";
 		return false;
@@ -143,6 +145,12 @@ bool fileManager::openFileLoc(QModelIndex& index)
 	}
 	return false;
 
+}
+
+
+QStringList fileManager::loadFromDataBase() {
+	files = dao.getFileInfos();
+	return files;
 }
 
 //void fileManager::updateIconTheme() {

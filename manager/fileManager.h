@@ -9,6 +9,7 @@
 #include<qdir.h>
 #include<fileKard.h>
 #include"themeManager.h"
+#include"fileDao.h"
 class fileManager {
 public:
 	fileManager();
@@ -23,10 +24,12 @@ public:
 	void searchFile(const QString& fileName);
 	QString getFilePath(QModelIndex&index);
 	bool openFileLoc(QModelIndex& index);
+	QStringList loadFromDataBase();
 	//void updateIconTheme();
 private:
+	fileDao dao;
 	QStandardItemModel* model;
 	QSortFilterProxyModel* sortModel;
-	QVector<QString>files;//临时存储到内存中，后续再改成数据库
+	QStringList files;//临时存储到内存中，后续再改成数据库
 	QVector<fileKard*>fileKardLists;
 };
