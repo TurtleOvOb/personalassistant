@@ -71,43 +71,67 @@ bool fileDao::initQuery() {
     return false;
 }
 
+//入库前统一路径写法：正斜杠 + 小写盘符。
+//Windows 路径大小写不敏感，QFileDialog 给正斜杠、拖拽给反斜杠，
+//不统一的话同一个文件会以两种写法各存一份，去重就形同虚设。
+QString fileDao::normalizePath(const QString& filePath)
+{
+    if (filePath.isEmpty()) {
+        return QString();
+    }
+    //存在就取规范全路径，能把 .. 和符号链接都理顺
+    QString canonical = QFileInfo(filePath).canonicalFilePath();
+    QString result = canonical.isEmpty() ? QFileInfo(filePath).absoluteFilePath() : canonical;
+    return QDir::fromNativeSeparators(result).toLower();
+}
+
 //注意：这里传进来的是完整路径，不能是 QFileInfo::fileName()
 //存成纯文件名后重启就再也定位不到文件了
 int fileDao::addFile(QString filePath)
 {
     if (filePath.isEmpty()) {
+        qDebug() << "addFile: empty path";
         return -1;
     }
+    const QString normalized = normalizePath(filePath);
+
+    //每次都要现场取一次连接，不能复用旧引用：
+    //DBManager::instance() 每次都会 addDatabase，旧连接会被顶掉
     QSqlDatabase db = DBManager::instance();
-    QSqlQuery query(db);
     if (!db.open()) {
-        qDebug() << "database open failed";
+        qDebug() << "addFile: database open failed" << db.lastError().text();
+        return -1;
     }
+
     //同一个文件不重复入库，否则每次启动都会多出一行
+    //这里的 exec 失败必须显式上报：表不存在时它会静默返回false，
+    //接着走 INSERT 同样失败，表面上看不出任何问题
     QSqlQuery findQuery(db);
     findQuery.prepare("SELECT id FROM fileInfo WHERE filePath=:filePath");
-    findQuery.bindValue(":filePath", filePath);
-    if (findQuery.exec() && findQuery.next()) {
+    findQuery.bindValue(":filePath", normalized);
+    if (!findQuery.exec()) {
+        qDebug() << "addFile: SELECT failed" << findQuery.lastError().text();
+    }
+    else if (findQuery.next()) {
         int existsId = findQuery.value(0).toInt();
+        qDebug() << "addFile: already exists, id =" << existsId << normalized;
         db.close();
         return existsId;
     }
 
-    QString addSql = R"(
-    INSERT INTO fileInfo(filePath) VALUES(:filePath);
-   )";
-    query.prepare(addSql);
-    query.bindValue(":filePath", filePath);
-    if (query.exec()) {
-        //拿自增主键，这才是后续删除该用的id
-        int id = query.lastInsertId().toInt();
-        qDebug() << "add file success, id =" << id;
+    QSqlQuery insertQuery(db);
+    insertQuery.prepare("INSERT INTO fileInfo(filePath) VALUES(:filePath)");
+    insertQuery.bindValue(":filePath", normalized);
+    if (!insertQuery.exec()) {
+        qDebug() << "addFile: INSERT failed" << insertQuery.lastError().text();
         db.close();
-        return id;
+        return -1;
     }
-    qDebug() << "add file failed" << query.lastError();
+    //拿自增主键，这才是后续删除该用的id
+    int id = insertQuery.lastInsertId().toInt();
+    qDebug() << "addFile: inserted id =" << id << normalized;
     db.close();
-    return -1;
+    return id;
 }
 
 //按主键id删除，调用方传的必须是id，不是model行号
@@ -152,6 +176,7 @@ void fileDao::removeInvalidRows()
             if (path.isEmpty() || !QFileInfo(path).isAbsolute()) {
                 badIds.append(selectQuery.value(0).toString());
             }
+
         }
     }
     if (badIds.isEmpty()) {
@@ -170,6 +195,8 @@ void fileDao::removeInvalidRows()
     qDebug() << "removed invalid file records:" << removed;
     db.close();
 }
+
+
 
 QVector<fileRecord> fileDao::getFileInfos()
 {

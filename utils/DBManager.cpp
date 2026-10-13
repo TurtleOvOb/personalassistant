@@ -1,7 +1,9 @@
 ﻿#include<DBManager.h>
  QSqlDatabase& DBManager::instance() {
 	 static QSqlDatabase instance;
+	 if(!instance.isValid())
 	 instance = QSqlDatabase::addDatabase("QSQLITE");
-	 instance.setDatabaseName("kard.db");
+	 QString dbPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)+"kard.db";
+	 instance.setDatabaseName(dbPath);
 	 return instance;
 }
