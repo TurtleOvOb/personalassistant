@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include"../coreCard/BaseKard.h"
 #include<qlabel.h>
 #include<qboxlayout.h>

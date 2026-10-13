@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include<qsqlquery.h>
 #include"DBManager.h"
 #include<qdatetime.h>

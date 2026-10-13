@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include<qtableview.h>
 #include<qevent.h>
 #include<qmimedata.h>

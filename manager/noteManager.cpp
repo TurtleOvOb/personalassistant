@@ -1,4 +1,4 @@
-#include<noteManager.h>
+ï»¿#include<noteManager.h>
 noteManager::noteManager()
 {
 }
@@ -77,7 +77,7 @@ void noteManager::sortBy(int type)
     qDebug() << "start searching";
     QVector<NoteKard*>results;
     for (NoteKard* kard : noteKardList) {
-        //¿¨Æ¬ÀàÐÍÓëÉ¸Ñ¡ÀàÐÍÆ¥Åä»òÕßÉ¸Ñ¡ÀàÐÍÎªÄ¬ÈÏ
+        //å¡ç‰‡ç±»åž‹ä¸Žç­›é€‰ç±»åž‹åŒ¹é…æˆ–è€…ç­›é€‰ç±»åž‹ä¸ºé»˜è®¤
         
         if (kard->type== Type|| Type ==NoteKard::Default) {
             results.append(kard);
@@ -88,7 +88,7 @@ void noteManager::sortBy(int type)
 }
 
 //void noteManager::updateIconTheme()
-//{//Ã¿¸ö¿¨Æ¬µ÷ÓÃseticon·½·¨,¼ì²éµ±Ç°theme²¢¸üÐÂicon
+//{//æ¯ä¸ªå¡ç‰‡è°ƒç”¨seticonæ–¹æ³•,æ£€æŸ¥å½“å‰themeå¹¶æ›´æ–°icon
 //    for (NoteKard* kard : noteKardList) {
 //        kard->setIcon();
 //    }

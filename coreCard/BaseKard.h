@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 //#include<qwidget.h>
 #include<qframe.h>
 #include<qobject.h>

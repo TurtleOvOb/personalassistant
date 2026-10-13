@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include<qsortfilterproxymodel.h>
 #include"fileKard.h"
 #include<qobject.h>

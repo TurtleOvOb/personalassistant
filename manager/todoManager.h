@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include"../todo/toDoKard.h"
 #include<qvector.h>
 #include<qwidget.h>

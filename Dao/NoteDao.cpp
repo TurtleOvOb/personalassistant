@@ -1,4 +1,4 @@
-#include"NoteDao.h"
+﻿#include"NoteDao.h"
 #include "fileDao.h"
 noteDao::noteDao() {
     if (initQuery()) {

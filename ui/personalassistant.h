@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include"mySortModel.h"
 #include <QtWidgets/QWidget>
 #include "ui_personalassistant.h"
@@ -13,6 +13,7 @@
 #include<qsettings.h>
 //#include<qsortfilterproxymodel.h>
 #include<qclipboard.h>
+#include<qmessagebox.h>
 #include"todoDao.h"
 //#include"NoteDao.h"
 //#include"fileDao.h"
@@ -36,8 +37,6 @@ private:
     noteManager* note;
     fileManager *file;
     todoDao todoDAO;
-    //noteDao noteDAO;
-    //fileDao fileDAO;
     bool curTheme;
     bool isCreate_Note;
     bool isCreate;
@@ -50,7 +49,6 @@ private:
     void initSlots();
     void handleKardAction(BaseKard*kard);
     void fillEditpage(BaseKard*kard);
-    //void updateIconTheme();
     void loadFromDataBase();
     void readConfig();
     void closeEvent(QCloseEvent*event)override;

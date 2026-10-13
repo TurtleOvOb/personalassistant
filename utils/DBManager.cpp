@@ -1,4 +1,4 @@
-#include<DBManager.h>
+﻿#include<DBManager.h>
  QSqlDatabase& DBManager::instance() {
 	 static QSqlDatabase instance;
 	 instance = QSqlDatabase::addDatabase("QSQLITE");

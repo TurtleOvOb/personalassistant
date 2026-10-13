@@ -1,4 +1,4 @@
-#include"mySortModel.h"
+ï»¿#include"mySortModel.h"
 
 mySortModel::mySortModel(QObject* parent ):QSortFilterProxyModel(parent)
 {
@@ -22,14 +22,14 @@ bool mySortModel::filterAcceptsRow(int row, const QModelIndex& parent) const
     QString fileName = sourceModel()->data(indexName).toString();
     QString suffix = sourceModel()->data(indexType).toString();
 
-    // ===== ËÑË÷Ìõ¼ş =====
+    // ===== æœç´¢æ¡ä»¶ =====
     bool matchSearch = true;
 
     if (!filterRegularExpression().pattern().isEmpty()) {
         matchSearch = fileName.contains(filterRegularExpression());
     }
 
-    // ===== ÀàĞÍÌõ¼ş =====
+    // ===== ç±»å‹æ¡ä»¶ =====
     bool matchType = true;
 
     if (type != fileKard::Default) {

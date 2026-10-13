@@ -442,14 +442,26 @@ void personalassistant::openFile(const QModelIndex& index)
 void personalassistant::deleteFile()
 {
     //弹窗提示是否删除？
-  QModelIndex index=ui->fileViewer->currentIndex();
-  if (!index.isValid()) {
-      ui->label_curState->setText("未选中任何文件");
-      return;
-  }
-  if (file->deleteFile(index)) {
-      ui->label_curState->setText("删除成功");
-  }
+    //这里拿到的是视图(proxy)的index，排序或者筛选之后它的row并不是源数据的行号，
+    //映射回源模型、再按数据库主键删除这活儿交给 fileManager 做
+    QModelIndex index = ui->fileViewer->currentIndex();
+    if (!index.isValid()) {
+        ui->label_curState->setText("未选中任何文件");
+        return;
+    }
+    //显示文件名是为了让用户在筛选状态下也能确认选中了哪一个
+    QString fileName = file->fileNameOf(index);
+    if (QMessageBox::question(this, "删除文件",
+        QString("确定要删除「%1」吗？\n该文件会从磁盘上真正删除。").arg(fileName),
+        QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes) {
+        return;
+    }
+    if (file->deleteFile(index)) {
+        ui->label_curState->setText("删除成功");
+    }
+    else {
+        ui->label_curState->setText("删除失败，文件可能已不存在");
+    }
 }
 
 void personalassistant::getFilePath()

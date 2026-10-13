@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include<qabstractitemmodel.h>
 
 class fileModel :public QAbstractTableModel  {
