@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include<qsqlquery.h>
 #include"DBManager.h"
 #include<qdatetime.h>
@@ -27,6 +27,8 @@ public:
 	QVector<fileRecord> getFileInfos();
 	//启动时清理历史脏数据：之前误存成纯文件名（相对路径）的记录
 	void removeInvalidRows();
+	//入库前统一路径写法：正斜杠 + 小写。addFile 内部会调，外部也可用
+	static QString normalizePath(const QString& filePath);
 private:
 	bool initQuery();
 	//QString fileTableName();

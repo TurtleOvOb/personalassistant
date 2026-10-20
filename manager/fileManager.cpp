@@ -78,6 +78,7 @@ int fileManager::idOfRow(int sourceRow) const
 //这样model自己就能回答"我是哪个文件"，不用靠行号去反查
 void fileManager::appendFileRow(const QString& filePath, int id)
 {
+	if (id < 0)return;
 	QFileInfo info(filePath);
 	QString fileType = info.isDir() ? QStringLiteral("dir") : info.suffix();
 	QString lastTime = info.lastModified().toString("yyyy-MM-dd hh:mm:ss");
@@ -145,21 +146,19 @@ bool fileManager::deleteFile(const QModelIndex& index)
 	}
 
 	QFile file(path);
+	QString fileName = fileNameOf(index);
 	if (!file.exists()) {
-		qDebug() << "file doesn't exists" << path;
+		QMessageBox::warning(nullptr, "错误", fileName + ":文件不存在",QMessageBox::Close);
 		return false;
 	}
 	if (!file.remove()) {
-		qWarning() << "file delete fail:" << file.errorString();
+		QMessageBox::warning(nullptr, "错误", fileName + ":文件删除失败",QMessageBox::Close);
 		return false;
 	}
-	qDebug() << "file delete success" << path;
+	QMessageBox::information(nullptr, "消息", fileName + ":文件删除成功", QMessageBox::Yes);
 
 	//磁盘删掉了，再同步内存和数据库
 	model->removeRow(rowIndex);
-	//if (rowIndex >= 0 && rowIndex < files.size()) {
-	//	files.removeAt(rowIndex);
-	//}
 	idCache.remove(path);
 	//按主键删除，绝不能用行号
 	if (id >= 0) {
@@ -170,9 +169,7 @@ bool fileManager::deleteFile(const QModelIndex& index)
 
 void fileManager::searchFile(const QString& fileName)
 {
-	if (sortModel == nullptr) {
-		return;
-	}
+	if (sortModel == nullptr) return;
 	sortModel->setFilterFixedString(fileName);
 	
 }
@@ -180,18 +177,14 @@ void fileManager::searchFile(const QString& fileName)
 QString fileManager::getFilePath(const QModelIndex& index)
 {
 	QModelIndex source = toSourceIndex(index);
-	if (!source.isValid()) {
-		return QString();
-	}
+	if (!source.isValid()) return QString(); 
 	return pathOfRow(source.row());
 }
 
 QString fileManager::fileNameOf(const QModelIndex& index)
 {
 	QModelIndex source = toSourceIndex(index);
-	if (!source.isValid() || model == nullptr) {
-		return QString();
-	}
+	if (!source.isValid() || model == nullptr) 	return QString();
 	QStandardItem* item = model->item(source.row(), 0);
 	return item == nullptr ? QString() : item->text();
 }
@@ -232,28 +225,22 @@ bool fileManager::openFileLoc(const QModelIndex& index)
 QStringList fileManager::loadFromDataBase() {
 	//先把以前存成纯文件名的脏记录清掉，那些重启后已经无法定位了
 	dao.removeInvalidRows();
-
 	model->removeRows(0, model->rowCount());
-
 	idCache.clear();
 	QStringList filePaths;
 	QVector<fileRecord> records = dao.getFileInfos();
+	int count = 0;//计算没用的文件数量
 	for (const fileRecord& record : records) {
 		if (record.path.isEmpty() || !QFileInfo::exists(record.path)) {
 			//文件已经被用户在外面删掉了，顺手把记录清干净
-			qDebug() << "file no longer exists, drop record:" << record.path;
+			qInfo() << "file no longer exists, drop record:" << record.path;
 			dao.deleteFile(record.id);
 			continue;
 		}
 		filePaths.append(record.path);
 		appendFileRow(record.path, record.id);
 	}
+	if(count)
+	QMessageBox::information(nullptr, "消息", "已清除" + QString::number(count)+"条无效文件", QMessageBox::Yes);
 	return filePaths;
 }
-
-//void fileManager::updateIconTheme() {
-//
-//	for (fileKard* kard : fileKardLists) {
-//		kard->setIcon();
-//	}
-//}

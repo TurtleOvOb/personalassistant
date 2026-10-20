@@ -70,9 +70,10 @@ void personalassistant::initSlots()
     connect(ui->btnCreate_Note, &QPushButton::clicked, this, &personalassistant::create_NoteKard);
     connect(ui->btnSave, &QPushButton::clicked, this, &personalassistant::save_ToDoList);
     connect(ui->btnSave_Note, &QPushButton::clicked, this, &personalassistant::save_Note);
-    connect(ui->fileViewer, &QAbstractItemView::doubleClicked, this, &personalassistant::openFile);
+    connect(ui->fileViewer, &QAbstractItemView::doubleClicked, this, &personalassistant::openFile_DoubleClick);
     connect(ui->btnDelFile, &QPushButton::clicked, this, &personalassistant::deleteFile);
     connect(ui->btnToFileLoc, &QPushButton::clicked, this, &personalassistant::openFileLoc);
+    connect(ui->btnOpenFile, &QPushButton::clicked, this, &personalassistant::openFile_btnClick);
     connect(ui->btnGetFilePath, &QPushButton::clicked, this, &personalassistant::getFilePath);
     connect(ui->lineEdit_fileSearch, &QLineEdit::textChanged, this, &personalassistant::searchFile);
     connect(ui->fileViewer, &myTableview::done, this,&personalassistant::dragFile);
@@ -139,7 +140,7 @@ void personalassistant::loadFromDataBase()
     int count = 0;
     QVector<toDoKard*>todoKardList = todo->loadFromDataBase(this);
     QVector<NoteKard*>noteKardList = note->loadFromDataBase(this);
-    QVector<QString>filePaths = file->loadFromDataBase();
+    //fileManager::loadFromDataBase 内部已经往 model 里追加过行了，这里不要再追加一遍
     for (toDoKard* kard : todoKardList) {
         connect(kard, &toDoKard::doubleClicked, this, &personalassistant::switchToShowPage);
         ui->verticalLayout_23->addWidget(kard);
@@ -150,26 +151,7 @@ void personalassistant::loadFromDataBase()
         ui->verticalLayout_22->addWidget(kard);
         count++;
     }
-    QString fileName;
-    QString lastTime;
-    QString fileType;
-    qint64 fileSize;
-    for (QString filePath : filePaths) {
-        QFileInfo info(filePath);
-        fileName = info.fileName();
-        lastTime = info.lastModified().toString("yyyy-MM-dd hh:mm:ss");
-        if (info.isDir()) {
-            fileType = "director";
-        };
-        fileType = info.suffix();
-        fileSize = info.size();
-        QList<QStandardItem*>rowInfo;
-        rowInfo.append(new QStandardItem(fileName));
-        rowInfo.append(new QStandardItem(lastTime));
-        rowInfo.append(new QStandardItem(fileType));
-        rowInfo.append(new QStandardItem(QString::number(fileSize)));
-        model->appendRow(rowInfo);
-    }
+    file->loadFromDataBase();
 qDebug() << "已成功加载" << count << "条数据";
 }
 
@@ -425,8 +407,20 @@ void personalassistant::addFile()
     QStringList filePaths = QFileDialog::getOpenFileNames(this);
     file->loadFile(filePaths);
 }
-
-void personalassistant::openFile(const QModelIndex& index)
+void personalassistant::openFile_btnClick()
+{
+   QModelIndex index=ui->fileViewer->currentIndex();
+    if (!index.isValid()) {
+        ui->label_curState->setText("未选中任何文件");
+        return;
+    }
+    if (file->openFile(index)) {
+        ui->label_curState->setText("文件打开成功");
+        return;
+    }
+    ui->label_curState->setText("文件打开失败");
+}
+void personalassistant::openFile_DoubleClick(const QModelIndex& index)
 {
     if (!index.isValid()) {
         ui->label_curState->setText("未选中任何文件");
@@ -504,7 +498,7 @@ void personalassistant::searchFile(const QString& fileName)
 {
     file->searchFile(fileName);
 
-    qDebug() << "personalassistant::searchFile";
+    //qDebug() << "personalassistant::searchFile";
 }
 
 void personalassistant::dragFile(QStringList& filePaths)
@@ -573,7 +567,7 @@ void personalassistant::switchToShowPage(BaseKard* kard)
         //cur_Selected_Kard = kard;
         qDebug() << "选中当前Notekard";
         //填充Note卡片信息到当前页面
-        qDebug() << note->Title() << note->Des() << note->type;
+        //qDebug() << note->Title() << note->Des() << note->type;
         ui->input_Notetitle->setText(note->Title());
         ui->input_Note->setPlainText(note->Des());
         ui->noteTypeBox->setCurrentIndex(note->type);
@@ -603,12 +597,13 @@ void personalassistant::todo_receiveResults(QVector<toDoKard*> results)
     qDebug() << "移除现有widget";//takeAt拿走布局，只是不在管理卡片的位置，卡片本身还在内存中
     while (QLayoutItem* item = ui->verticalLayout_23->takeAt(0)) {
         if (QWidget* widget = item->widget()) {
-            qDebug() << widget;
             widget->hide();
+            widget->deleteLater();
        }
-        delete item;
+  
     }
-    qDebug() << "添加新widget";
+   
+    //模拟上面卡片删除后，下面的卡片挤上来的感觉
     for (toDoKard* kard : results) {
         if (kard) {
             kard->show();
@@ -616,7 +611,6 @@ void personalassistant::todo_receiveResults(QVector<toDoKard*> results)
             ui->verticalLayout_23->addWidget(kard);
         }
     }
-    qDebug() << "添加完成";
 }
 
 void personalassistant::searchNote()
@@ -628,15 +622,17 @@ void personalassistant::note_receiveResults(QVector<NoteKard*> results)
 {
     while (QLayoutItem* item = ui->verticalLayout_22->takeAt(0)) {
         if (QWidget* widget = item->widget()) {
-            qDebug() << widget;
+      
             widget->hide();
+            widget->deleteLater();
         }
-        delete item;
+    
     }
+    //模拟上面卡片删除后，下面的卡片挤上来的感觉
     for (NoteKard* kard : results) {
         if (kard) {
             kard->show();
-            //记得将kard重新添加回布局
+     
             ui->verticalLayout_22->addWidget(kard);
         }
     }
@@ -646,7 +642,7 @@ void personalassistant::sortNote(int index)
 {
     note->sortBy(index);
 }
-
+//神了，居然是这样实现排序效果的吗
 void personalassistant::note_receiveSortResults(QVector<NoteKard*> results)
 {
     while (QLayoutItem* item = ui->verticalLayout_22->takeAt(0)) {

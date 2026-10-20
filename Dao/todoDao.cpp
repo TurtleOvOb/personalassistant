@@ -7,7 +7,7 @@ todoDao::todoDao()
         qDebug() << "table init success";
     }
     else {
-        qDebug() << "table init failed";
+        qWarning() << "table init failed";
     }
     
 }
@@ -20,7 +20,7 @@ bool todoDao::initQuery()
 {
 	QSqlDatabase db = DBManager::instance();
     if (!db.open()) {
-        qDebug() << "database open failed";
+        qCritical() << "database open failed";
     }
 	QSqlQuery query(db);
 	QString initSql = R"(
@@ -39,7 +39,7 @@ bool todoDao::initQuery()
         db.close();
         return true;
     }
-    qDebug() << "sql exec failed or table already created" << query.lastError();
+    qWarning() << "sql exec failed or table already created" << query.lastError();
     db.close();
 	return false;
 }
@@ -50,7 +50,7 @@ int todoDao::addKard(QString title, QString des, QDate deadLine, QString priorit
     QSqlDatabase db = DBManager::instance();
     QSqlQuery query(db);
     if (!db.open()) {
-        qDebug() << "database open failed";
+        qCritical() << "database open failed";
     }
     QString addSql = R"(
     INSERT INTO todo(title,des,deadLine,priority) VALUES(:title,:des,:deadLine,:priority);
@@ -66,7 +66,7 @@ int todoDao::addKard(QString title, QString des, QDate deadLine, QString priorit
         db.close();
         return id;
     }
-    qDebug() << "add todokard failed";
+    qWarning() << "add todokard failed";
     db.close();
     return false;
 }
@@ -76,7 +76,7 @@ bool todoDao::deleteKard(int id)
     QSqlDatabase db = DBManager::instance();
     QSqlQuery query(db);
     if (!db.open()) {
-        qDebug() << "database open failed";
+        qCritical() << "database open failed";
     }
     QString delSql = R"(
     DELETE FROM todo WHERE id=:id
@@ -88,7 +88,7 @@ bool todoDao::deleteKard(int id)
         db.close();
         return true;
     }
-    qDebug() << "del todokard failed";
+    qWarning() << "del todokard failed";
     db.close();
     return false;
 }
@@ -98,7 +98,7 @@ bool todoDao::updateKard(int id, QString title, QString des, QDate deadLine, QSt
     QSqlDatabase db = DBManager::instance();
     QSqlQuery query(db);
     if (!db.open()) {
-        qDebug() << "database open failed";
+        qCritical() << "database open failed";
     }
     QString sql = R"(
 UPDATE todo 
@@ -116,7 +116,7 @@ WHERE id=(:id)
         db.close();
         return true;
     }
-    qDebug() << "update todokard failed";
+    qWarning() << "update todokard failed";
     db.close();
     return false;
 }
@@ -126,7 +126,7 @@ QVector<toDoKard*> todoDao::getToDoKards(QWidget* parent)
     QVector<toDoKard*>kardList;
     QSqlDatabase db = DBManager::instance();
     if (!db.open()) {
-        qDebug() << "database open failed";
+        qCritical() << "database open failed";
     }
     QSqlQuery query(db);
     QString sql = R"(
@@ -134,7 +134,7 @@ QVector<toDoKard*> todoDao::getToDoKards(QWidget* parent)
      )"; 
     query.prepare(sql);
     if (!query.exec()) {
-        qDebug() << "dataBase select failed";
+        qWarning() << "dataBase select failed";
     }
     while (query.next()) {
         int id = query.value("id").toInt();

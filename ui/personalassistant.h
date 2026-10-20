@@ -76,7 +76,8 @@ private slots:
     void refreshCurKardStyle();
 
     void addFile();
-    void openFile(const QModelIndex&index);
+    void openFile_btnClick();
+    void openFile_DoubleClick(const QModelIndex&index);
     void deleteFile();
     void getFilePath();
     void openFileLoc();

@@ -40,7 +40,6 @@ void fileKard::setType(Type type, themeManager::Theme theme)
 }
 
 void fileKard::setIcon(themeManager::Theme theme) {
-	qDebug() << "fileKard setIcon triggered";
 	switch (type)
 	{
 	case fileKard::Default:
@@ -103,7 +102,6 @@ void fileKard::mouseReleaseEvent(QMouseEvent* event)
 {
 
 	if (event->button() == Qt::LeftButton) {
-		qDebug() << "filekard clicked";
 		emit clicked(this->type);
 	}
 }

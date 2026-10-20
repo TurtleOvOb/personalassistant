@@ -1,7 +1,8 @@
-﻿#include"fileDao.h"
+#include"fileDao.h"
 #include<qsqldatabase.h>
 #include<qsqlrecord.h>
 #include<qfileinfo.h>
+#include<qdir.h>
 
 fileDao::fileDao()
 {
@@ -16,40 +17,10 @@ fileDao::fileDao()
 fileDao::~fileDao()
 {
 }
-
-//之前误建的旧表叫 file，新表加上 filePath 列后改名 fileInfo，
-//这里做一次自动迁移：老表存在就把它改名过来，数据不丢。
-//QString fileDao::fileTableName() {
-//    QSqlDatabase db = DBManager::instance();
-//    if (!db.open()) {
-//        qDebug() << "database open failed";
-//    }
-//    QString name = "fileInfo";
-//    QSqlQuery query(db);
-//    query.prepare("SELECT name FROM sqlite_master WHERE type='table'");
-//    QStringList tables;
-//    if (query.exec()) {
-//        while (query.next()) {
-//            tables.append(query.value(0).toString());
-//        }
-//    }
-//    if (!tables.contains("fileInfo") && tables.contains("file")) {
-//        QSqlQuery rename(db);
-//        if (rename.exec("ALTER TABLE file RENAME TO fileInfo")) {
-//            qDebug() << "file table renamed to fileInfo";
-//        }
-//        else {
-//            qDebug() << "rename file table failed" << rename.lastError();
-//        }
-//    }
-//    db.close();
-//    return name;
-//}
-
 bool fileDao::initQuery() {
     QSqlDatabase db = DBManager::instance();
     if (!db.open()) {
-        qDebug() << "database open failed";
+        qCritical() << "database open failed";
     }
     QString table = "fileInfo";
     //fileTableName 内部重新取过一次连接，这里不需要再 open
@@ -62,11 +33,11 @@ bool fileDao::initQuery() {
     )").arg(table);
     query.prepare(initSql);
     if (query.exec()) {
-        qDebug() << "create file success";
+        qInfo() << "文件表建立成功";
         db.close();
         return true;
     }
-    qDebug() << "sql exec failed or table already created" << query.lastError();
+    qWarning() << "文件表创建失败或已存在" << query.lastError();
     db.close();
     return false;
 }
@@ -90,7 +61,7 @@ QString fileDao::normalizePath(const QString& filePath)
 int fileDao::addFile(QString filePath)
 {
     if (filePath.isEmpty()) {
-        qDebug() << "addFile: empty path";
+        qInfo() << "数据库添加文件失败,原因：文件路径为空";
         return -1;
     }
     const QString normalized = normalizePath(filePath);
@@ -99,7 +70,7 @@ int fileDao::addFile(QString filePath)
     //DBManager::instance() 每次都会 addDatabase，旧连接会被顶掉
     QSqlDatabase db = DBManager::instance();
     if (!db.open()) {
-        qDebug() << "addFile: database open failed" << db.lastError().text();
+        qCritical() << "addFile: database open failed" << db.lastError().text();
         return -1;
     }
 
@@ -110,20 +81,20 @@ int fileDao::addFile(QString filePath)
     findQuery.prepare("SELECT id FROM fileInfo WHERE filePath=:filePath");
     findQuery.bindValue(":filePath", normalized);
     if (!findQuery.exec()) {
-        qDebug() << "addFile: SELECT failed" << findQuery.lastError().text();
+        qWarning() << "addFile: SELECT failed" << findQuery.lastError().text();
     }
     else if (findQuery.next()) {
         int existsId = findQuery.value(0).toInt();
         qDebug() << "addFile: already exists, id =" << existsId << normalized;
         db.close();
-        return existsId;
+        return -1;
     }
 
     QSqlQuery insertQuery(db);
     insertQuery.prepare("INSERT INTO fileInfo(filePath) VALUES(:filePath)");
     insertQuery.bindValue(":filePath", normalized);
     if (!insertQuery.exec()) {
-        qDebug() << "addFile: INSERT failed" << insertQuery.lastError().text();
+        qWarning() << "addFile: INSERT failed" << insertQuery.lastError().text();
         db.close();
         return -1;
     }
@@ -143,7 +114,7 @@ bool fileDao::deleteFile(const int id)
     QSqlDatabase db = DBManager::instance();
     QSqlQuery query(db);
     if (!db.open()) {
-        qDebug() << "database open failed";
+        qCritical() << "database open failed";
     }
     QString delSql = R"(
     DELETE FROM fileInfo WHERE id=:id
@@ -155,7 +126,7 @@ bool fileDao::deleteFile(const int id)
         db.close();
         return true;
     }
-    qDebug() << "del file failed" << query.lastError();
+    qWarning() << "del file failed" << query.lastError();
     db.close();
     return false;
 }
@@ -166,7 +137,7 @@ void fileDao::removeInvalidRows()
     QSqlDatabase db = DBManager::instance();
     QSqlQuery query(db);
     if (!db.open()) {
-        qDebug() << "database open failed";
+        qCritical() << "database open failed";
     }
     QSqlQuery selectQuery(db);
     QStringList badIds;
@@ -203,7 +174,7 @@ QVector<fileRecord> fileDao::getFileInfos()
     QVector<fileRecord> fileInfos;
     QSqlDatabase db = DBManager::instance();
     if (!db.open()) {
-        qDebug() << "database open failed";
+        qCritical() << "database open failed";
     }
     QSqlQuery query(db);
     //必须 ORDER BY id，否则行序不保证，model行号和id会对不上
@@ -212,7 +183,7 @@ QVector<fileRecord> fileDao::getFileInfos()
      )";
     query.prepare(sql);
     if (!query.exec()) {
-        qDebug() << "dataBase select failed" << query.lastError();
+        qWarning() << "dataBase select failed" << query.lastError();
     }
     while (query.next()) {
         fileRecord record;

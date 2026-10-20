@@ -110,7 +110,6 @@ QString NoteKard::Des()
 
 void NoteKard::setIcon(themeManager::Theme theme)
 {
-	qDebug() << "noteKard setIcon triggered";
 	switch (type)
 	{
 	case NoteKard::Default:

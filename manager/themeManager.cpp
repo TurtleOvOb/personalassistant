@@ -31,6 +31,7 @@ QString themeManager::switchTheme(int index) {
     QDir dirMode;
     switch (index)
     {
+
     case 1:
         dirMode.setPath(":/new/prefix3/style/lightMode");
         break;
@@ -38,8 +39,16 @@ QString themeManager::switchTheme(int index) {
         dirMode.setPath(":/new/prefix2/style/darkMode");
         break;
     default:
+     Qt::ColorScheme scheme=QGuiApplication::styleHints()->colorScheme();
+     if (scheme == Qt::ColorScheme::Light) {
+         dirMode.setPath(":/new/prefix3/style/lightMode");
+     }
+     else {
+         dirMode.setPath(":/new/prefix2/style/darkMode");
+     }
         break;
     }
+    //逐文件解析qss
     QFileInfoList dirList = dirMode.entryInfoList();
     QFile file;
     for (QFileInfo mode : dirList) {
@@ -55,7 +64,7 @@ QString themeManager::switchTheme(int index) {
                 file.close();
             }
             else {
-                qDebug() << filePath << "加载失败";
+                qWarning() << filePath << "：qss加载失败";
             }
         }
 

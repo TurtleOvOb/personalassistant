@@ -2,6 +2,9 @@
 #include<qobject.h>
 #include<qdebug.h>
 #include<qdir.h>
+#include<qguiapplication.h>
+#include<qstylehints.h>
+
 class themeManager :public QObject{
 	Q_OBJECT
 public:

@@ -9,7 +9,6 @@ noteManager::~noteManager()
 
 NoteKard* noteManager::create_NoteKard(QWidget* parent, QString title, QString des, int type, themeManager::Theme theme)
 {
-    qDebug() << type;
 	NoteKard* kard = new NoteKard(parent);
     kard->setTitle(title);
     kard->setDes(des);
@@ -34,16 +33,13 @@ bool noteManager::update_noteKard(NoteKard* kard)
 {
     if (dao.updateKard(kard->Id(), kard->Title(),
         kard->Des(), kard->type)) {
-        qDebug() << "update success";
         return true;
     }
-    qDebug() << "update failed";
     return false;
 }
 
 void noteManager::search_NoteKard(QString title)
 {
-    qDebug() << "start searching";
     QVector<NoteKard*>results;
     for (NoteKard* kard : noteKardList) {
         if (kard->Title().contains(title)) {
@@ -51,7 +47,6 @@ void noteManager::search_NoteKard(QString title)
         }
     }
     emit searchDone(results);
-    qDebug() << "search done!";
 }
 
 void noteManager::sortBy(int type)
@@ -74,7 +69,6 @@ void noteManager::sortBy(int type)
     default:
         break;
     }
-    qDebug() << "start searching";
     QVector<NoteKard*>results;
     for (NoteKard* kard : noteKardList) {
         //卡片类型与筛选类型匹配或者筛选类型为默认
@@ -84,7 +78,6 @@ void noteManager::sortBy(int type)
         }
     }
     emit sortDone(results);
-    qDebug() << "search done!";
 }
 
 //void noteManager::updateIconTheme()

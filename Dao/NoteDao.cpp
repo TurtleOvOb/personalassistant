@@ -5,7 +5,7 @@ noteDao::noteDao() {
         qDebug() << "notetable init success";
     }
     else {
-        qDebug() << "notetable init failed";
+        qWarning() << "notetable init failed";
     }
 }
 
@@ -16,7 +16,7 @@ noteDao::~noteDao()
 bool noteDao::initQuery() {
     QSqlDatabase db = DBManager::instance();
     if (!db.open()) {
-        qDebug() << "database open failed";
+        qCritical() << "database open failed";
     }
     QSqlQuery query(db);
     QString initSql = R"(
@@ -34,7 +34,7 @@ bool noteDao::initQuery() {
         db.close();
         return true;
     }
-    qDebug() << "sql exec failed or table already created" << query.lastError();
+    qWarning() << "sql exec failed or table already created" << query.lastError();
     db.close();
     return false;
 }
@@ -44,7 +44,7 @@ int noteDao::addKard(QString title, QString des, int type)
     QSqlDatabase db = DBManager::instance();
     QSqlQuery query(db);
     if (!db.open()) {
-        qDebug() << "database open failed";
+        qCritical() << "database open failed";
     }
     QString addSql = R"(
     INSERT INTO note(title,des,type) VALUES(:title,:des,:type);
@@ -59,7 +59,7 @@ int noteDao::addKard(QString title, QString des, int type)
         db.close();
         return id;
     }
-    qDebug() << "add notekard failed";
+    qWarning() << "add notekard failed";
     db.close();
     return false;
 }
@@ -67,7 +67,7 @@ bool noteDao::deleteKard(int id) {
     QSqlDatabase db = DBManager::instance();
     QSqlQuery query(db);
     if (!db.open()) {
-        qDebug() << "database open failed";
+        qCritical() << "database open failed";
     }
     QString delSql = R"(
     DELETE FROM note WHERE id=:id
@@ -79,7 +79,7 @@ bool noteDao::deleteKard(int id) {
         db.close();
         return true;
     }
-    qDebug() << "del notekard failed";
+    qWarning() << "del notekard failed";
     db.close();
     return false;
 }
@@ -89,7 +89,7 @@ bool noteDao::updateKard(int id, QString title, QString des, int type)
     QSqlDatabase db = DBManager::instance();
     QSqlQuery query(db);
     if (!db.open()) {
-        qDebug() << "database open failed";
+        qCritical() << "database open failed";
     }
     QString sql = R"(
 UPDATE note 
@@ -106,7 +106,7 @@ WHERE id=(:id)
         db.close();
         return true;
     }
-    qDebug() << "update notekard failed";
+    qWarning() << "update notekard failed";
     db.close();
     return false;
 }
@@ -118,7 +118,7 @@ QVector<NoteKard*> noteDao::getNoteKards(QWidget* parent)
     QVector<NoteKard*>kardList;
     QSqlDatabase db = DBManager::instance();
     if (!db.open()) {
-        qDebug() << "database open failed";
+        qCritical() << "database open failed";
     }
     QSqlQuery query(db);
     QString sql = R"(
@@ -126,7 +126,7 @@ QVector<NoteKard*> noteDao::getNoteKards(QWidget* parent)
      )";
     query.prepare(sql);
     if (!query.exec()) {
-        qDebug() << "dataBase select failed";
+        qWarning() << "dataBase select failed";
     }
     while (query.next()) {
         int id = query.value("id").toInt();

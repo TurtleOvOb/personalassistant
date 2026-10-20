@@ -3,6 +3,7 @@
 #include<qvector.h>
 #include<qwidget.h>
 #include"todoDao.h"
+#include<qmessagebox.h>
 class todoManager :public QObject{
 	Q_OBJECT
 public:

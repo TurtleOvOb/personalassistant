@@ -47,7 +47,7 @@ void myTableview::paintEvent(QPaintEvent* event) {
 		QFont font = painter.font();
 		font.setPointSize(12);
 		painter.setFont(font);
-		QString text = "暂无数据，请点击“添加”按钮";
+		QString text = "点击“添加”文件或拖拽文件到这里";
 		// 在视口正中心绘制文字
 		painter.drawText(viewport()->rect(), Qt::AlignCenter, text);
 	}
