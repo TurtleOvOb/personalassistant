@@ -13,6 +13,11 @@ fileManager::~fileManager()
 {
 }
 
+void fileManager::setSearchState(bool state)
+{
+
+}
+
 fileKard* fileManager::createFileKard(QWidget* parent, fileKard::Type type, themeManager::Theme theme)
 {
 	fileKard* kard = new fileKard(parent, type,theme);
@@ -79,7 +84,7 @@ int fileManager::idOfRow(int sourceRow) const
 void fileManager::appendFileRow(const QString& filePath, int id)
 {
 	if (id < 0)return;
-	QFileInfo info(filePath);
+		QFileInfo info(filePath);
 	QString fileType = info.isDir() ? QStringLiteral("dir") : info.suffix();
 	QString lastTime = info.lastModified().toString("yyyy-MM-dd hh:mm:ss");
 
@@ -89,11 +94,11 @@ void fileManager::appendFileRow(const QString& filePath, int id)
 
 	QList<QStandardItem*> rowInfo;
 	rowInfo.append(nameItem);
-	rowInfo.append(new QStandardItem(lastTime));
-	rowInfo.append(new QStandardItem(fileType));
+		rowInfo.append(new QStandardItem(lastTime));
+		rowInfo.append(new QStandardItem(fileType));
 	rowInfo.append(new QStandardItem(QString::number(info.size())));
 
-	model->appendRow(rowInfo);
+		model->appendRow(rowInfo);
 	
 	if (id >= 0) {
 		idCache.insert(filePath, id);
@@ -152,18 +157,18 @@ bool fileManager::deleteFile(const QModelIndex& index)
 		return false;
 	}
 	if (!file.remove()) {
-		QMessageBox::warning(nullptr, "错误", fileName + ":文件删除失败",QMessageBox::Close);
+		QMessageBox::warning(nullptr, "����", fileName + ":�ļ�ɾ��ʧ��",QMessageBox::Close);
 		return false;
 	}
-	QMessageBox::information(nullptr, "消息", fileName + ":文件删除成功", QMessageBox::Yes);
+	QMessageBox::information(nullptr, "��Ϣ", fileName + ":�ļ�ɾ���ɹ�", QMessageBox::Yes);
 
-	//磁盘删掉了，再同步内存和数据库
+	//����ɾ���ˣ���ͬ���ڴ�����ݿ�
 	model->removeRow(rowIndex);
 	idCache.remove(path);
-	//按主键删除，绝不能用行号
+	//������ɾ�������������к�
 	if (id >= 0) {
 		dao.deleteFile(id);
-	}
+}
 	return true;
 }
 
@@ -179,7 +184,7 @@ QString fileManager::getFilePath(const QModelIndex& index)
 	QModelIndex source = toSourceIndex(index);
 	if (!source.isValid()) return QString(); 
 	return pathOfRow(source.row());
-}
+	}
 
 QString fileManager::fileNameOf(const QModelIndex& index)
 {
@@ -201,26 +206,30 @@ bool fileManager::openFileLoc(const QModelIndex& index)
 	}
 	QFileInfo fileInfo(path);
 #if defined(Q_OS_WIN)
-	// Windows 系统：explorer /select, 文件路径
+	// Windows ϵͳ��explorer /select, �ļ�·��
 	QString nativePath = QDir::toNativeSeparators(fileInfo.absoluteFilePath());
 
-	// 正确格式：explorer /select,"C:\xxx\file.txt"
+	// ��ȷ��ʽ��explorer /select,"C:\xxx\file.txt"
 	QStringList args;
 	args << "/select," << nativePath;
 
 	QProcess::startDetached("explorer", args);
 
 #elif defined(Q_OS_MAC)
-	// macOS 系统：open -R 文件路径
+	// macOS ϵͳ��open -R �ļ�·��
 	QProcess::startDetached("open", { "-R", fileInfo.absoluteFilePath() });
 
 #elif defined(Q_OS_LINUX)
-	// Linux 系统：xdg-open 文件夹路径
+	// Linux ϵͳ��xdg-open �ļ���·��
 	QDesktopServices::openUrl(QUrl::fromLocalFile(fileInfo.absolutePath()));
 #endif
 
 	return true;
+	}
+	return false;
+
 }
+
 
 QStringList fileManager::loadFromDataBase() {
 	//先把以前存成纯文件名的脏记录清掉，那些重启后已经无法定位了
@@ -244,3 +253,10 @@ QStringList fileManager::loadFromDataBase() {
 	QMessageBox::information(nullptr, "消息", "已清除" + QString::number(count)+"条无效文件", QMessageBox::Yes);
 	return filePaths;
 }
+
+//void fileManager::updateIconTheme() {
+//
+//	for (fileKard* kard : fileKardLists) {
+//		kard->setIcon();
+//	}
+//}

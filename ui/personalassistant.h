@@ -37,6 +37,8 @@ private:
     noteManager* note;
     fileManager *file;
     todoDao todoDAO;
+    //noteDao noteDAO;
+    //fileDao fileDAO;
     bool curTheme;
     bool isCreate_Note;
     bool isCreate;
@@ -49,6 +51,7 @@ private:
     void initSlots();
     void handleKardAction(BaseKard*kard);
     void fillEditpage(BaseKard*kard);
+    //void updateIconTheme();
     void loadFromDataBase();
     void readConfig();
     void closeEvent(QCloseEvent*event)override;

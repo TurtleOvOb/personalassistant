@@ -17,13 +17,14 @@ fileDao::fileDao()
 fileDao::~fileDao()
 {
 }
+
 bool fileDao::initQuery() {
     QSqlDatabase db = DBManager::instance();
     if (!db.open()) {
         qCritical() << "database open failed";
     }
     QString table = "fileInfo";
-    //fileTableName 内部重新取过一次连接，这里不需要再 open
+    //fileTableName �ڲ�����ȡ��һ�����ӣ����ﲻ��Ҫ�� open
     QSqlQuery query(db);
     QString initSql = QString(R"(
     CREATE TABLE IF NOT EXISTS %1(
@@ -42,33 +43,34 @@ bool fileDao::initQuery() {
     return false;
 }
 
-//入库前统一路径写法：正斜杠 + 小写盘符。
-//Windows 路径大小写不敏感，QFileDialog 给正斜杠、拖拽给反斜杠，
-//不统一的话同一个文件会以两种写法各存一份，去重就形同虚设。
+//���ǰͳһ·��д������б�� + Сд�̷���
+//Windows ·����Сд����У�QFileDialog ����б�ܡ���ק����б�ܣ�
+//��ͳһ�Ļ�ͬһ���ļ���������д������һ�ݣ�ȥ�ؾ���ͬ���衣
 QString fileDao::normalizePath(const QString& filePath)
 {
     if (filePath.isEmpty()) {
         return QString();
     }
-    //存在就取规范全路径，能把 .. 和符号链接都理顺
+    //���ھ�ȡ�淶ȫ·�����ܰ� .. �ͷ������Ӷ���˳
     QString canonical = QFileInfo(filePath).canonicalFilePath();
     QString result = canonical.isEmpty() ? QFileInfo(filePath).absoluteFilePath() : canonical;
     return QDir::fromNativeSeparators(result).toLower();
 }
 
-//注意：这里传进来的是完整路径，不能是 QFileInfo::fileName()
-//存成纯文件名后重启就再也定位不到文件了
+//ע�⣺���ﴫ������������·���������� QFileInfo::fileName()
+//��ɴ��ļ������������Ҳ��λ�����ļ���
 int fileDao::addFile(QString filePath)
 {
     if (filePath.isEmpty()) {
-        qInfo() << "数据库添加文件失败,原因：文件路径为空";
+        qInfo() << "���ݿ�����ļ�ʧ��,ԭ���ļ�·��Ϊ��";
         return -1;
     }
     const QString normalized = normalizePath(filePath);
 
-    //每次都要现场取一次连接，不能复用旧引用：
-    //DBManager::instance() 每次都会 addDatabase，旧连接会被顶掉
+    //ÿ�ζ�Ҫ�ֳ�ȡһ�����ӣ����ܸ��þ����ã�
+    //DBManager::instance() ÿ�ζ��� addDatabase�������ӻᱻ����
     QSqlDatabase db = DBManager::instance();
+    QSqlQuery query(db);
     if (!db.open()) {
         qCritical() << "addFile: database open failed" << db.lastError().text();
         return -1;
@@ -131,7 +133,7 @@ bool fileDao::deleteFile(const int id)
     return false;
 }
 
-//清掉历史脏数据：以前 addFile(fileName) 存进去的纯文件名，重启后无法定位
+//�����ʷ�����ݣ���ǰ addFile(fileName) ���ȥ�Ĵ��ļ�����������޷���λ
 void fileDao::removeInvalidRows()
 {
     QSqlDatabase db = DBManager::instance();
@@ -177,7 +179,7 @@ QVector<fileRecord> fileDao::getFileInfos()
         qCritical() << "database open failed";
     }
     QSqlQuery query(db);
-    //必须 ORDER BY id，否则行序不保证，model行号和id会对不上
+    //���� ORDER BY id���������򲻱�֤��model�кź�id��Բ���
     QString sql = R"(
      SELECT id, filePath FROM fileInfo ORDER BY id
      )";

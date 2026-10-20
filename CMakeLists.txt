@@ -8,10 +8,10 @@ include(qt.cmake)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# ---- 源文件编码统一为 UTF-8(带签名 BOM) ----
-# 1) 所有 .h/.cpp 都存成 UTF-8 with BOM，MSVC 靠 BOM 就能认出 UTF-8，不再按本地代码页猜；
-# 2) /utf-8 等价于 /source-charset:utf-8 /execution-charset:utf-8，
-#    让源码和执行期窄字符串都用 UTF-8，中文注释和 QString 字面量才不会乱码。
+# ---- Դ�ļ�����ͳһΪ UTF-8(��ǩ�� BOM) ----
+# 1) ���� .h/.cpp ����� UTF-8 with BOM��MSVC �� BOM �����ϳ� UTF-8�����ٰ����ش���ҳ�£�
+# 2) /utf-8 �ȼ��� /source-charset:utf-8 /execution-charset:utf-8��
+#    ��Դ���ִ����խ�ַ������� UTF-8������ע�ͺ� QString �������Ų������롣
 add_compile_options($<$<COMPILE_LANG_AND_ID:CXX,MSVC,MSVC-like>:/utf-8>)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
@@ -42,6 +42,8 @@ set(PROJECT_SOURCES
 
     file/fileKard.h
     file/fileKard.cpp
+    file/fileModel.h
+    file/fileModel.cpp
     file/myTableview/myTableview.h
     file/myTableview/myTableview.cpp
     file/mySortModel/mySortModel.h
@@ -96,10 +98,10 @@ qt_add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
 
 target_include_directories(
     ${PROJECT_NAME} PRIVATE 
-    ${CMAKE_CURRENT_SOURCE_DIR}              # 项目根目录
-    ${CMAKE_CURRENT_SOURCE_DIR}/file/myTableview  # 专门针对你的 m_ScrollArea
+    ${CMAKE_CURRENT_SOURCE_DIR}              # ��Ŀ��Ŀ¼
+    ${CMAKE_CURRENT_SOURCE_DIR}/file/myTableview  # ר�������� m_ScrollArea
     ${CMAKE_CURRENT_SOURCE_DIR}/file/mySortModel
-    # 建议顺便把其他文件夹也加上，以后在代码里 include 就不需要写长长的路径了
+    # ����˳��������ļ���Ҳ���ϣ��Ժ��ڴ����� include �Ͳ���Ҫд������·����
     ${CMAKE_CURRENT_SOURCE_DIR}/ui
     ${CMAKE_CURRENT_SOURCE_DIR}/coreCard
     ${CMAKE_CURRENT_SOURCE_DIR}/todo
@@ -123,3 +125,4 @@ target_link_libraries(${PROJECT_NAME}
         Qt::Widgets
         Qt::Sql
 )
+

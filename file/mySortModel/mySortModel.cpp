@@ -22,14 +22,14 @@ bool mySortModel::filterAcceptsRow(int row, const QModelIndex& parent) const
     QString fileName = sourceModel()->data(indexName).toString();
     QString suffix = sourceModel()->data(indexType).toString();
 
-    // ===== 搜索条件 =====
+    // ===== �������� =====
     bool matchSearch = true;
 
     if (!filterRegularExpression().pattern().isEmpty()) {
         matchSearch = fileName.contains(filterRegularExpression());
     }
 
-    // ===== 类型条件 =====
+    // ===== �������� =====
     bool matchType = true;
 
     if (type != fileKard::Default) {
