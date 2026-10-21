@@ -1,4 +1,4 @@
-#include"fileDao.h"
+﻿#include"fileDao.h"
 #include<qsqldatabase.h>
 #include<qsqlrecord.h>
 #include<qfileinfo.h>

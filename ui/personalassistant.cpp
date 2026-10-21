@@ -7,6 +7,7 @@ personalassistant::personalassistant(QWidget* parent)
     : QWidget(parent)
     , ui(new Ui::personalassistantClass())
 {    ui->setupUi(this);
+
     isCreate = 0;
     isCreate_Note = 0;
     isEdit = 0;
