@@ -42,6 +42,8 @@ set(PROJECT_SOURCES
 
     file/fileKard.h
     file/fileKard.cpp
+    file/fileModel.h
+    file/fileModel.cpp
     file/myTableview/myTableview.h
     file/myTableview/myTableview.cpp
     file/mySortModel/mySortModel.h
@@ -124,3 +126,4 @@ target_link_libraries(${PROJECT_NAME}
         Qt::Widgets
         Qt::Sql
 )
+

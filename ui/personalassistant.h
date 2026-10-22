@@ -45,6 +45,7 @@ private:
     void initSlots();
     void handleKardAction(BaseKard*kard);
     void fillEditpage(BaseKard*kard);
+    //void updateIconTheme();
     void loadFromDataBase();
     void readConfig();
     void closeEvent(QCloseEvent*event)override;

@@ -21,11 +21,15 @@
 - **状态记忆** — 关闭时保存当前页面与主题，下次启动恢复
 -**日志管理**（未完成）—记录程序运行时各模块状态
 ---
+## 运行截图
+### 待办：
+<img width="1041" height="697" alt="QQ_1792653262707" src="https://github.com/user-attachments/assets/1a560c01-1ad3-4238-9ac6-7f1f412e5b52" />
 
-## 截图
+### 文件：
+<img width="1041" height="697" alt="QQ_1792653336755" src="https://github.com/user-attachments/assets/1427b7e4-b201-4fcd-8fe0-edf4fc434ce1" />
 
-**（待补充：放 2-3 张，主界面 / 待办页 / 文件页。没有就删掉这一节）**
-
+### 设置页：
+<img width="1041" height="697" alt="QQ_1792653367155" src="https://github.com/user-attachments/assets/ea0e9b04-0120-47a6-b890-66ed6c70b5ae" />
 ---
 
 ## 技术栈
@@ -102,14 +106,14 @@ D:\Qt\6.9.3\msvc2022_64\bin\windeployqt.exe --debug out\build\debug\personalassi
 - `cur_Selected_Kard` 用裸指针记录选中项，卡片销毁后易悬空
 - `manager` 同时持有数据和卡片列表，职责偏重
 - 日志为固定文件追加，无级别过滤与滚动
--  待办和笔记的搜索功能失效，清空
+
 ---
 ## 可能的更新
 - 自定义的笔记/文件分类，新增笔记/文件时用户自主选择分类
 -  卡片多余文本省略显示
 - 文本块功能
 - 真正的待办事项：支持进行中/已完成/已过期分类
-  
+- 跨平台支持
 ---
 ## License
 

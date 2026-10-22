@@ -19,6 +19,7 @@ void themeManager::setTheme(int index)
     else if(index==2){
         curTheme = Dark;
     }
+    qDebug() << curTheme;
     emit themeChanged(curTheme);
 }
 

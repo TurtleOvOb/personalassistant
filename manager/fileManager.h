@@ -14,18 +14,19 @@
 #include"fileDao.h"
 class fileManager {
 public:
-	//挂在model第0列item上的自定义数据：完整路径和数据库真实主键id
+	//����model��0��item�ϵ��Զ������ݣ�����·�������ݿ���ʵ����id
 	enum DataRole {
 		PathRole = Qt::UserRole + 1,
 		IdRole
 	};
 	fileManager();
 	~fileManager();
+	void setSearchState(bool state);
 	fileKard* createFileKard(QWidget*parent,fileKard::Type type,themeManager::Theme theme);
 	void setModel(QStandardItemModel* model);
 	void setSortModel(QSortFilterProxyModel* model);
 	bool loadFile(QStringList& filePaths);
-	//下面这几个收到的都是视图(proxy)的index，内部会先映射回源模型
+	//�����⼸���յ��Ķ�����ͼ(proxy)��index���ڲ�����ӳ���Դģ��
 	bool openFile(const QModelIndex&index);
 	bool deleteFile(const QModelIndex& index);
 	void searchFile(const QString& fileName);
@@ -35,10 +36,10 @@ public:
 	QStringList loadFromDataBase();
 	//void updateIconTheme();
 private:
-	//视图index -> 源模型index，排序/筛选后这一步是必须的
+	//��ͼindex -> Դģ��index������/ɸѡ����һ���Ǳ����
 	QModelIndex toSourceIndex(const QModelIndex& index) const;
-	QString pathOfRow(int sourceRow) const;//获取视图中的文件路径（用于）
-	int idOfRow(int sourceRow) const;//获取视图中的id（用于数据库）
+	QString pathOfRow(int sourceRow) const;//��ȡ��ͼ�е��ļ�·�������ڣ�
+	int idOfRow(int sourceRow) const;//��ȡ��ͼ�е�id���������ݿ⣩
 	void appendFileRow(const QString& filePath, int id);
 	fileDao dao;
 	QStandardItemModel* model;

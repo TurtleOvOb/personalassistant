@@ -439,10 +439,10 @@ void personalassistant::deleteFile()
     //这里拿到的是视图(proxy)的index，排序或者筛选之后它的row并不是源数据的行号，
     //映射回源模型、再按数据库主键删除这活儿交给 fileManager 做
     QModelIndex index = ui->fileViewer->currentIndex();
-    if (!index.isValid()) {
-        ui->label_curState->setText("未选中任何文件");
-        return;
-    }
+  if (!index.isValid()) {
+      ui->label_curState->setText("未选中任何文件");
+      return;
+  }
     //显示文件名是为了让用户在筛选状态下也能确认选中了哪一个
     QString fileName = file->fileNameOf(index);
     if (QMessageBox::question(this, "删除文件",
@@ -450,9 +450,9 @@ void personalassistant::deleteFile()
         QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes) {
         return;
     }
-    if (file->deleteFile(index)) {
-        ui->label_curState->setText("删除成功");
-    }
+  if (file->deleteFile(index)) {
+      ui->label_curState->setText("删除成功");
+  }
     else {
         ui->label_curState->setText("删除失败，文件可能已不存在");
     }
@@ -597,6 +597,7 @@ void personalassistant::todo_receiveResults(QVector<toDoKard*> results)
     qDebug() << "移除现有widget";//takeAt拿走布局，只是不在管理卡片的位置，卡片本身还在内存中
     while (QLayoutItem* item = ui->verticalLayout_23->takeAt(0)) {
         if (QWidget* widget = item->widget()) {
+            qDebug() << widget;
             widget->hide();
         }
         delete item;
@@ -610,6 +611,7 @@ void personalassistant::todo_receiveResults(QVector<toDoKard*> results)
             ui->verticalLayout_23->addWidget(kard);
         }
     }
+    qDebug() << "添加完成";
 }
 
 void personalassistant::searchNote()
