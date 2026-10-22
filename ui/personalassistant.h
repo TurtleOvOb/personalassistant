@@ -11,12 +11,9 @@
 #include<qfiledialog.h>
 #include<qstandarditemmodel.h>
 #include<qsettings.h>
-//#include<qsortfilterproxymodel.h>
 #include<qclipboard.h>
 #include<qmessagebox.h>
 #include"todoDao.h"
-//#include"NoteDao.h"
-//#include"fileDao.h"
 class toDoKard;
 class NoteKard;
 class fileKard;
@@ -36,9 +33,6 @@ private:
     todoManager* todo;
     noteManager* note;
     fileManager *file;
-    todoDao todoDAO;
-    //noteDao noteDAO;
-    //fileDao fileDAO;
     bool curTheme;
     bool isCreate_Note;
     bool isCreate;
