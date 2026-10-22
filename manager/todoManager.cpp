@@ -25,11 +25,11 @@ toDoKard* todoManager::create_toDoKard(QWidget*parent,QString title, QString des
 
 bool todoManager::delete_toDoKard(BaseKard* toDel_Kard)
 {
-
+	//获取要删除卡片在缓存中的下一个卡片，返回给ui并展示
 	if (toDel_Kard != nullptr) {
 	todoKardList.removeOne(toDel_Kard);
 	auto *kard = qobject_cast<toDoKard*>(toDel_Kard);
-	if (dao.deleteKard(kard->Id())) {
+	if (!dao.deleteKard(kard->Id())) {
 		qWarning() << "delete todoKard from database failed";
 	}
 	toDel_Kard->hide();

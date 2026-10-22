@@ -141,7 +141,6 @@ void personalassistant::loadFromDataBase()
     int count = 0;
     QVector<toDoKard*>todoKardList = todo->loadFromDataBase(this);
     QVector<NoteKard*>noteKardList = note->loadFromDataBase(this);
-    //fileManager::loadFromDataBase 内部已经往 model 里追加过行了，这里不要再追加一遍
     for (toDoKard* kard : todoKardList) {
         connect(kard, &toDoKard::doubleClicked, this, &personalassistant::switchToShowPage);
         ui->verticalLayout_23->addWidget(kard);
@@ -171,8 +170,6 @@ void personalassistant::readConfig()
     config.beginGroup("AppTheme");
     int themeIndex = config.value("theme").toInt();
     ui->comboBox_Theme->setCurrentIndex(themeIndex);
-    //switchTheme(themeIndex);
-    //themeManager::instance()->setTheme(themeIndex);
     config.endGroup();
 
     config.beginGroup("DefalutFilePath");
@@ -225,7 +222,7 @@ void personalassistant::create_NoteKard()
     qDebug() << "创建NoteKard中";
     isCreate_Note = 1;
     ui->stackedWidget->setCurrentIndex(2);
-    ui->input_Title->clear();
+    ui->input_Notetitle->clear();
     ui->input_Note->clear();
     ui->btnSave_Note->setText("创建");
 }
@@ -253,10 +250,8 @@ void personalassistant::save_ToDoList()
     cur_Selected_Kard = kard;
     cur_Selected_Kard->setProperty("selected", true);
     refreshCurKardStyle();
-    //connect(kard,&toDoKard::clicked,this, &personalassistant::updateSelected);
     connect(kard, &toDoKard::doubleClicked, this, &personalassistant::switchToShowPage);
     isCreate = 0;
-    //on_btnClear_clicked();
     handleKardAction(cur_Selected_Kard);
     ui->stackedWidget->setCurrentIndex(1);
     ui->btnSave->setText("保存");
@@ -287,7 +282,6 @@ void personalassistant::save_Note()
     cur_Selected_Kard = kard;
     cur_Selected_Kard->setProperty("selected", true);
     refreshCurKardStyle();
-    //connect(kard, &NoteKard::clicked, this, &personalassistant::updateSelected);
     connect(kard, &NoteKard::doubleClicked, this, &personalassistant::switchToShowPage);
     isCreate_Note = 0;
     ui->btnSave_Note->setText("保存");
@@ -299,8 +293,6 @@ void personalassistant::on_btnBack_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
     isCreate = isEdit = 0;
-
-
 }
 //删除按钮信号连接
 void personalassistant::on_btnDel_clicked()
@@ -308,11 +300,17 @@ void personalassistant::on_btnDel_clicked()
     if (cur_Selected_Kard != nullptr) {
         //值传递
  ui->verticalLayout_23->removeWidget(cur_Selected_Kard);
+ ui->input_S_Description->clear();
+ ui->input_Title->clear();
+ ui->input_Description->clear();
+ ui->comboBox_Prior->setCurrentIndex(0);
+
  todo->delete_toDoKard(cur_Selected_Kard);
+
  cur_Selected_Kard = nullptr;
     }
     else {
-        qDebug() << "delete fail:" << "none todoKard selected";
+        qWarning() << "delete fail:" << "none todoKard selected";
     }
 }
 
@@ -321,6 +319,9 @@ void personalassistant::on_btnDel_Note_clicked()
     if (cur_Selected_Kard == nullptr)return;
     qDebug() << "deleting curKard";
     ui->verticalLayout_22->removeWidget(cur_Selected_Kard);
+    ui->input_Notetitle->clear();
+    ui->input_Note->clear();
+    ui->noteTypeBox->setCurrentIndex(0);
     note->delete_NoteKard(cur_Selected_Kard);
     cur_Selected_Kard = nullptr;
     qDebug() << "delete success";
@@ -332,10 +333,9 @@ void personalassistant::on_btnClear_clicked()
     ui->input_Search->clear();
     while (QLayoutItem* item = ui->verticalLayout_23->takeAt(0)) {
         if (QWidget* widget = item->widget()) {
-            qDebug() << widget;
             widget->hide();
         }
-        delete item;
+        delete item;//只删除ui中的item而不是底层的数据
     }
    
   QVector<toDoKard*>kardList=todo->getKardList();
@@ -354,10 +354,9 @@ void personalassistant::on_btnClear_2_clicked() {
     ui->input_Search_2->clear();
     while (QLayoutItem* item = ui->verticalLayout_22->takeAt(0)) {
         if (QWidget* widget = item->widget()) {
-            qDebug() << widget;
             widget->hide();
         }
-        delete item;
+        delete item;//只删除ui中的item而不是底层的数据
     }
 
     QVector<NoteKard*>kardList = note->getNoteKardList();
@@ -599,9 +598,8 @@ void personalassistant::todo_receiveResults(QVector<toDoKard*> results)
     while (QLayoutItem* item = ui->verticalLayout_23->takeAt(0)) {
         if (QWidget* widget = item->widget()) {
             widget->hide();
-            widget->deleteLater();
-       }
-  
+        }
+        delete item;
     }
    
     //模拟上面卡片删除后，下面的卡片挤上来的感觉
@@ -623,11 +621,9 @@ void personalassistant::note_receiveResults(QVector<NoteKard*> results)
 {
     while (QLayoutItem* item = ui->verticalLayout_22->takeAt(0)) {
         if (QWidget* widget = item->widget()) {
-      
             widget->hide();
-            widget->deleteLater();
         }
-    
+        delete item;
     }
     //模拟上面卡片删除后，下面的卡片挤上来的感觉
     for (NoteKard* kard : results) {

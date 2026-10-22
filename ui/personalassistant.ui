@@ -175,7 +175,7 @@
         </size>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="to_do_List">
         <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -321,8 +321,8 @@
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>98</width>
-                   <height>28</height>
+                   <width>240</width>
+                   <height>517</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_23"/>
@@ -560,8 +560,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>258</width>
-                <height>543</height>
+                <width>98</width>
+                <height>28</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_13"/>
@@ -585,7 +585,7 @@
           </sizepolicy>
          </property>
          <property name="currentIndex">
-          <number>3</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="to_do_List_Create">
           <layout class="QVBoxLayout" name="verticalLayout_6">
