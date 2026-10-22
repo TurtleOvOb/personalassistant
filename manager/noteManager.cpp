@@ -66,10 +66,10 @@ void noteManager::sortBy(int type)
         Type = NoteKard::Work;
         break;
     case 2:
-        Type = NoteKard::Daily;
+        Type = NoteKard::Study;
         break;
     case 3:
-        Type = NoteKard::Study;
+        Type = NoteKard::Daily;
         break;
     default:
         break;

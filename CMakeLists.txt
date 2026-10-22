@@ -4,14 +4,14 @@ project(personalassistant LANGUAGES CXX)
 
 
 include(qt.cmake)
+if(NOT CMAKE_PREFIX_PATH AND DEFINED ENV{QTDIR})
+    set(CMAKE_PREFIX_PATH "$ENV{QTDIR}")
+endif()
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# ---- Դ�ļ�����ͳһΪ UTF-8(��ǩ�� BOM) ----
-# 1) ���� .h/.cpp ����� UTF-8 with BOM��MSVC �� BOM �����ϳ� UTF-8�����ٰ����ش���ҳ�£�
-# 2) /utf-8 �ȼ��� /source-charset:utf-8 /execution-charset:utf-8��
-#    ��Դ���ִ����խ�ַ������� UTF-8������ע�ͺ� QString �������Ų������롣
+# ---- 源文件编码统一为 UTF-8(带签名 BOM) ----
 add_compile_options($<$<COMPILE_LANG_AND_ID:CXX,MSVC,MSVC-like>:/utf-8>)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
@@ -67,6 +67,8 @@ set(PROJECT_SOURCES
 
     utils/DBManager.h
     utils/DBManager.cpp
+    utils/logger.h
+    utils/logger.cpp
 
     style/darkMode/todoList/button.qss
     style/darkMode/todoList/inputWidget.qss
@@ -98,10 +100,9 @@ qt_add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
 
 target_include_directories(
     ${PROJECT_NAME} PRIVATE 
-    ${CMAKE_CURRENT_SOURCE_DIR}              # ��Ŀ��Ŀ¼
-    ${CMAKE_CURRENT_SOURCE_DIR}/file/myTableview  # ר�������� m_ScrollArea
+    ${CMAKE_CURRENT_SOURCE_DIR}          
+    ${CMAKE_CURRENT_SOURCE_DIR}/file/myTableview  
     ${CMAKE_CURRENT_SOURCE_DIR}/file/mySortModel
-    # ����˳��������ļ���Ҳ���ϣ��Ժ��ڴ����� include �Ͳ���Ҫд������·����
     ${CMAKE_CURRENT_SOURCE_DIR}/ui
     ${CMAKE_CURRENT_SOURCE_DIR}/coreCard
     ${CMAKE_CURRENT_SOURCE_DIR}/todo
