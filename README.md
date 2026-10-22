@@ -117,4 +117,4 @@ D:\Qt\6.9.3\msvc2022_64\bin\windeployqt.exe --debug out\build\debug\personalassi
 ---
 ## License
 
-MIT
+该项目使用MIT协议
