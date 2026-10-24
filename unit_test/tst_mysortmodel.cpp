@@ -29,7 +29,7 @@ private slots:
     void search_emptyPattern_showsAllRows();
     void search_noMatch_hidesAllRows();
     void search_isCaseSensitive_currentBehavior();
-    void typeIsCaseSensitive_currentBehavior();
+    void uppercaseSuffix_normalizedAndMatched();
     void searchAndType_areCombinedWithAnd();
     void setType_reEvaluatesImmediately();
     void emptySourceModel_returnsZeroRowCount();
@@ -190,7 +190,7 @@ void TestMySortModel::search_isCaseSensitive_currentBehavior()
     QCOMPARE(proxy.rowCount(), 0);
 }
 
-void TestMySortModel::typeIsCaseSensitive_currentBehavior()
+void TestMySortModel::uppercaseSuffix_normalizedAndMatched()
 {
     QStandardItemModel src;
     addRow(src, QStringLiteral("PHOTO.PDF"), QStringLiteral("PDF"));
@@ -199,7 +199,8 @@ void TestMySortModel::typeIsCaseSensitive_currentBehavior()
     proxy.setSourceModel(&src);
     proxy.setType(fileKard::Doc);
 
-    QCOMPARE(proxy.rowCount(), 0);
+    // filterAcceptsRow 已对 suffix 做 toLower()，大写后缀要能被认出来
+    QCOMPARE(proxy.rowCount(), 1);
 }
 
 void TestMySortModel::searchAndType_areCombinedWithAnd()
