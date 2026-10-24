@@ -297,22 +297,22 @@ void personalassistant::on_btnBack_clicked()
 //删除按钮信号连接
 void personalassistant::on_btnDel_clicked()
 {
-    if (cur_Selected_Kard != nullptr) {
-        //值传递
+    if (cur_Selected_Kard == nullptr) {
+        qWarning() << "delete fail:" << "none todoKard selected";
+        return;
+    }
  ui->verticalLayout_23->removeWidget(cur_Selected_Kard);
  ui->input_S_Description->clear();
  ui->input_Title->clear();
  ui->input_Description->clear();
  ui->comboBox_Prior->setCurrentIndex(0);
 
- todo->delete_toDoKard(cur_Selected_Kard);
-
+ if (todo->delete_toDoKard(cur_Selected_Kard))  QMessageBox::information(nullptr, "消息", "待办删除成功", QMessageBox::Yes);
+ else  QMessageBox::information(nullptr, "消息", "没有待办被选中", QMessageBox::Yes);
  cur_Selected_Kard = nullptr;
     }
-    else {
-        qWarning() << "delete fail:" << "none todoKard selected";
-    }
-}
+  
+
 
 void personalassistant::on_btnDel_Note_clicked()
 {

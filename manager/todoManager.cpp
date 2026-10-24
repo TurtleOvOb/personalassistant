@@ -1,4 +1,5 @@
 ﻿#include "todoManager.h"
+#include "filterRules.h"
 #include "noteManager.h"
 
 todoManager::todoManager()
@@ -35,11 +36,9 @@ bool todoManager::delete_toDoKard(BaseKard* toDel_Kard)
 	toDel_Kard->hide();
 	toDel_Kard->deleteLater();
 	toDel_Kard = nullptr;
-
-	QMessageBox::information(nullptr, "消息",  "待办删除成功", QMessageBox::Yes);
 	return true;
 	}
-	QMessageBox::information(nullptr, "消息", "没有待办被选中", QMessageBox::Yes);
+
 	return false;
 }
 
@@ -60,7 +59,7 @@ void todoManager::search_toDoKard(QString title)
 	qDebug() << "start searching";
 	QVector<toDoKard*>results;
 	for (toDoKard* kard : todoKardList) {
-		if (kard->Title().contains(title)) {
+		if (filterRules::matchesTitle(kard->Title(), title)) {
 			results.append(kard);
 		}
 	}

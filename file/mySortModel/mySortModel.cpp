@@ -20,7 +20,7 @@ bool mySortModel::filterAcceptsRow(int row, const QModelIndex& parent) const
     QModelIndex indexType = sourceModel()->index(row, 2, parent);
 
     QString fileName = sourceModel()->data(indexName).toString();
-    QString suffix = sourceModel()->data(indexType).toString();
+    QString suffix = sourceModel()->data(indexType).toString().toLower();
 
     // ===== �������� =====
     bool matchSearch = true;

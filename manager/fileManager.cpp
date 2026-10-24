@@ -225,9 +225,6 @@ bool fileManager::openFileLoc(const QModelIndex& index)
 #endif
 
 	return true;
-	}
-	return false;
-
 }
 
 

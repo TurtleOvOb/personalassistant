@@ -53,6 +53,7 @@ set(PROJECT_SOURCES
     manager/todoManager.cpp
     manager/noteManager.h
     manager/noteManager.cpp
+    manager/filterRules.cpp
     manager/fileManager.h
     manager/fileManager.cpp
     manager/themeManager.h
@@ -91,6 +92,8 @@ set(PROJECT_SOURCES
     style/lightMode/fileManager/widget.qss
      style/lightMode/fileManager/button.qss
        style/lightMode/settings/widget.qss
+
+
     ${APP_RESOURCES}
 )
 
@@ -126,4 +129,42 @@ target_link_libraries(${PROJECT_NAME}
         Qt::Widgets
         Qt::Sql
 )
+# ==================== 单元测试 ====================
+enable_testing()
+
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Test)
+
+# 所有测试共用的被测源码（按需增删）
+set(PA_TEST_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/utils/DBManager.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Dao/fileDao.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/file/mySortModel/mySortModel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/manager/filterRules.cpp
+)
+
+# 通用测试 target 生成器
+function(pa_add_test tst_name)
+    qt_add_executable(${tst_name} unit_test/${tst_name}.cpp ${PA_TEST_SOURCES})
+
+    target_include_directories(${tst_name} PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/Dao
+        ${CMAKE_CURRENT_SOURCE_DIR}/utils
+        ${CMAKE_CURRENT_SOURCE_DIR}/manager
+        ${CMAKE_CURRENT_SOURCE_DIR}/coreCard
+        ${CMAKE_CURRENT_SOURCE_DIR}/todo
+        ${CMAKE_CURRENT_SOURCE_DIR}/note
+        ${CMAKE_CURRENT_SOURCE_DIR}/file
+        ${CMAKE_CURRENT_SOURCE_DIR}/file/mySortModel
+    )
+
+    target_link_libraries(${tst_name} PRIVATE Qt::Core Qt::Sql Qt::Test Qt::Widgets)
+
+    add_test(NAME ${tst_name} COMMAND ${tst_name})
+    set_tests_properties(${tst_name} PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
+endfunction()
+
+pa_add_test(tst_filedao)
+pa_add_test(tst_mysortmodel)
+pa_add_test(tst_filterrules)
 

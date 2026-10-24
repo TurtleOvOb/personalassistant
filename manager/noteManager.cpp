@@ -1,4 +1,5 @@
 ﻿#include<noteManager.h>
+#include"filterRules.h"
 noteManager::noteManager()
 {
 }
@@ -46,7 +47,7 @@ void noteManager::search_NoteKard(QString title)
     qDebug() << "start searching";
     QVector<NoteKard*>results;
     for (NoteKard* kard : noteKardList) {
-        if (kard->Title().contains(title)) {
+        if (filterRules::matchesTitle(kard->Title(), title)) {
             results.append(kard);
         }
     }
@@ -79,7 +80,7 @@ void noteManager::sortBy(int type)
     for (NoteKard* kard : noteKardList) {
         //��Ƭ������ɸѡ����ƥ�����ɸѡ����ΪĬ��
         
-        if (kard->type== Type|| Type ==NoteKard::Default) {
+        if (filterRules::matchesType(kard->type, Type)) {
             results.append(kard);
         }
     }

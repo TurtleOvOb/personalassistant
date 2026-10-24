@@ -20,9 +20,9 @@ class fileDao {
 public:
 	fileDao();
 	~fileDao();
-	//д��һ���ļ���¼������������ʵ����id��ʧ�ܷ��� -1
+
 	int addFile(QString filePath);
-	//按主键id删除，绝不能用model行号
+	//按主键id删除，不能用model行号
 	bool deleteFile(const int id);
 	QVector<fileRecord> getFileInfos();
 	//启动时清理历史脏数据：之前误存成纯文件名（相对路径）的记录

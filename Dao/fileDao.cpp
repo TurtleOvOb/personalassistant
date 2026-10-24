@@ -43,22 +43,19 @@ bool fileDao::initQuery() {
     return false;
 }
 
-//���ǰͳһ·��д������б�� + Сд�̷���
-//Windows ·����Сд����У�QFileDialog ����б�ܡ���ק����б�ܣ�
-//��ͳһ�Ļ�ͬһ���ļ���������д������һ�ݣ�ȥ�ؾ���ͬ���衣
+
 QString fileDao::normalizePath(const QString& filePath)
 {
     if (filePath.isEmpty()) {
         return QString();
     }
-    //���ھ�ȡ�淶ȫ·�����ܰ� .. �ͷ������Ӷ���˳
+
     QString canonical = QFileInfo(filePath).canonicalFilePath();
     QString result = canonical.isEmpty() ? QFileInfo(filePath).absoluteFilePath() : canonical;
     return QDir::fromNativeSeparators(result).toLower();
 }
 
-//ע�⣺���ﴫ������������·���������� QFileInfo::fileName()
-//��ɴ��ļ������������Ҳ��λ�����ļ���
+
 int fileDao::addFile(QString filePath)
 {
     if (filePath.isEmpty()) {
@@ -67,8 +64,7 @@ int fileDao::addFile(QString filePath)
     }
     const QString normalized = normalizePath(filePath);
 
-    //ÿ�ζ�Ҫ�ֳ�ȡһ�����ӣ����ܸ��þ����ã�
-    //DBManager::instance() ÿ�ζ��� addDatabase�������ӻᱻ����
+  
     QSqlDatabase db = DBManager::instance();
     QSqlQuery query(db);
     if (!db.open()) {
@@ -110,9 +106,7 @@ int fileDao::addFile(QString filePath)
 //按主键id删除，调用方传的必须是id，不是model行号
 bool fileDao::deleteFile(const int id)
 {
-    if (id < 0) {
-        return false;
-    }
+    if (id < 0)  return false; 
     QSqlDatabase db = DBManager::instance();
     QSqlQuery query(db);
     if (!db.open()) {
@@ -123,14 +117,21 @@ bool fileDao::deleteFile(const int id)
    )";
     query.prepare(delSql);
     query.bindValue(":id", id);
-    if (query.exec()) {
-        qDebug() << "del file success, id =" << id;
+    if (!query.exec()) {
+        qWarning() << "del file failed" << query.lastError();
         db.close();
-        return true;
+        return false;
     }
-    qWarning() << "del file failed" << query.lastError();
+    const int affectedRows = query.numRowsAffected();
+    if (affectedRows <= 0) {
+        qInfo() << "file is not exist!";
+        return false;
+    }
+
+    qDebug() << "del file success, id =" << id;
     db.close();
-    return false;
+    return true;
+ 
 }
 
 //�����ʷ�����ݣ���ǰ addFile(fileName) ���ȥ�Ĵ��ļ�����������޷���λ

@@ -5,7 +5,7 @@
 class mySortModel :public QSortFilterProxyModel {
 	Q_OBJECT
 public:
-	bool isSearch=0;
+	//bool isSearch=0;
 	explicit mySortModel(QObject* parent = nullptr);
 	~mySortModel();
 	void setType(fileKard::Type type);
